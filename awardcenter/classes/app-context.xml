@@ -44,4 +44,6 @@
 	<bean id="LGXX5CacheRedis" class="com.lgame.app.awardcenter.cache.RedisXX5Cache"></bean>
 	<bean id="LGMMCCacheRedis" class="com.lgame.app.awardcenter.cache.RedisMMCCache"></bean>
 	<bean id="LGK3CacheRedis" class="com.lgame.app.awardcenter.cache.RedisK3Cache"></bean>
+	<bean id="LGLK28CacheRedis" class="com.lgame.app.business.cache.RedisLK28Cache"></bean>
+
 </beans>

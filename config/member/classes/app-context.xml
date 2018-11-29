@@ -70,6 +70,8 @@
 	<bean id="LGXX5CacheRedis" class="com.lgame.app.business.cache.RedisXX5Cache"></bean>
 	<bean id="LGK3CacheRedis" class="com.lgame.app.business.cache.RedisK3Cache"></bean>
 	<bean id="LGShiroCacheRedis" class="com.lgame.app.business.cache.RedisShiroCache"></bean>
+	<bean id="LGLK28CacheRedis" class="com.lgame.app.business.cache.RedisLK28Cache"></bean>
+	
 	<!-- 启动对@AspectJ注解的支持 -->  
 	<aop:aspectj-autoproxy/>  
 </beans>

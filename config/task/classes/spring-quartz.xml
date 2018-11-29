@@ -87,6 +87,13 @@ xmlns:util="http://www.springframework.org/schema/util"
 				<ref bean="getCTOG1K3NumberTrigger"/>
 				<ref bean="clearCTOG1K3Trigger"/>
 				
+				<ref bean="getOG1LK28NumberTrigger"/>
+				<ref bean="clearOG1LK28Trigger"/>
+				<ref bean="getCF1LK28NumberTrigger"/>
+				<ref bean="clearCF1LK28Trigger"/>
+ 				<ref bean="getXY1LK28NumberTrigger"/>
+				<ref bean="clearXY1LK28Trigger"/>	
+				
 				<ref bean="getCF111X5NumberTrigger"/>
 				<ref bean="clearCF111X5Trigger"/>
 				<ref bean="getOG111X5NumberTrigger"/>
@@ -214,7 +221,11 @@ xmlns:util="http://www.springframework.org/schema/util"
 				<ref bean="profitLossOG15PK10Trigger"/>
 				<ref bean="profitLossOG15PK102Trigger"/>
 				<ref bean="profitLossCTOG15PK10Trigger"/>
-				<ref bean="profitLossCTOG15PK102Trigger"/>				
+				<ref bean="profitLossCTOG15PK102Trigger"/>
+
+				<ref bean="profitLossOG1LK28Trigger"/>
+				<ref bean="profitLossCF1LK28Trigger"/>
+				<ref bean="profitLossXY1LK28Trigger"/>
 
 			</list>
 		</property>

@@ -32,6 +32,10 @@ xmlns:util="http://www.springframework.org/schema/util"
 				<ref bean="openAwardCTXY1K3Trigger" />
 				<ref bean="openAwardCTXY1BSCTrigger" />
 				<ref bean="openAwardCTCF1BSCTrigger" />
+				<ref bean="openAwardOG1LK28Trigger" />
+				<ref bean="openAwardCF1LK28Trigger" />
+				<ref bean="openAwardXY1LK28Trigger" />						
+				
 <!-- 				<ref bean="pushK3AwardResultTrigger" /> -->
 <!-- 				<ref bean="getKillerNumberPK10Trigger" /> -->
 <!--				<ref bean="getKillerNumberLHCTrigger" />-->
@@ -952,4 +956,64 @@ xmlns:util="http://www.springframework.org/schema/util"
 		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false -->
 		<property name="durability" value="true" />
 	</bean>
+	
+	<!--幸運28  1分開獎任务 -->
+	<bean id="openAwardOG1LK28Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="openAwardOG1LK28" />
+		<property name="cronExpression" value="* * * * * ?" />
+	</bean>
+	<bean id="openAwardOG1LK28" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.awardcenter.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="issueGetAwardOG1LK28" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!--中福幸運28  1分開獎任务 -->
+	<bean id="openAwardCF1LK28Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="openAwardCF1LK28" />
+		<property name="cronExpression" value="* * * * * ?" />
+	</bean>
+	<bean id="openAwardCF1LK28" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.awardcenter.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="issueGetAwardCF1LK28" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!--幸運幸運28  1分開獎任务 -->
+	<bean id="openAwardXY1LK28Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="openAwardXY1LK28" />
+		<property name="cronExpression" value="* * * * * ?" />
+	</bean>
+	<bean id="openAwardXY1LK28" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.awardcenter.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="issueGetAwardXY1LK28" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>	
 </beans>
