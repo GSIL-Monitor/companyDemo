@@ -1,0 +1,60 @@
+#ESB URL
+esb.core.url=http://esbcentertest.dawhale.com/ESB/main/core
+esb.token.url=http://esbcentertest.dawhale.com/ESB/interface/token
+esb.form.url=http://esbpaytest.dawhale.com/payment_platform/form/toForm
+
+#Used to call esb payment
+esb.route=initpayment
+#esb.appid=402881835d115016015d1155aa940027
+#payment id
+esb.appid=ff8080815cd32b7e015cd32ef4870028
+#acg id
+esb.callbackappid=ff8080815dc0e164015dc1566cf10028
+esb_callback_domain=esbcallbackuat.duasla.com
+esb.pay.domain.split.key=@@@
+esb.db.name=TW_DB01
+
+#Map key for payment , Make sure these keys same to project payment_platform's values
+payment.platform.ordernumber=paymentOrderNumber
+payment.platform.merchantkey=paymentMerchantKey
+payment.platform.appid=paymentAppid
+payment.platform.banktype=paymentBankType
+payment.platform.data=paymentData
+payment.platform.sendurl=paymentSendUrl
+payment.platform.restype=paymentResType
+payment.platform.payname=paymentPayName
+payment.platform.callbackappid=paymentCallbackAppid
+payment.platform.paymoney=paymoney
+payment.platform.merchantConsole=paymentMerchantConsole
+payment.platform.merchantNo=merchantNo
+payment.platform.postData=postData
+
+#pro
+#ESB URL
+#esb.core.url=http://esbonline.getidenaa.com/ESB/main/core
+#esb.token.url=http://esbonline.getidenaa.com/ESB/interface/token
+#esb.form.url=http://paymentonline.getidenaa.com/payment_platform/form/toForm
+
+#Used to call esb payment
+#esb.route=payment
+#esb.appid=ff8080815d04db77015d05308ddd0148
+#esb.callbackappid=ff8080815dc4d113015dea47ec8309df
+
+#esb_callback_domain=esbcallbackacg.phacg.com
+#esb.pay.domain.split.key=@@@
+#esb.db.name=TW_DB01
+
+#Map key for payment , Make sure these keys same to project payment_platform's values
+#payment.platform.ordernumber=paymentOrderNumber
+#payment.platform.merchantkey=paymentMerchantKey
+#payment.platform.appid=paymentAppid
+#payment.platform.banktype=paymentBankType
+#payment.platform.data=paymentData
+#payment.platform.sendurl=paymentSendUrl
+#payment.platform.restype=paymentResType
+#payment.platform.payname=paymentPayName
+#payment.platform.callbackappid=paymentCallbackAppid
+#payment.platform.paymoney=paymoney
+#payment.platform.merchantConsole=paymentMerchantConsole
+#payment.platform.merchantNo=merchantNo
+#payment.platform.postData=postData

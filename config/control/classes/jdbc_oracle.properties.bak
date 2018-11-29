@@ -1,0 +1,31 @@
+#oracle connection 
+
+oracle.jdbc.driverClassName=oracle.jdbc.driver.OracleDriver
+oracle.jdbc.validationQuery=SELECT 1 from dual
+oracle.jdbc.url=jdbc:oracle:thin:@oracle.demo.com:1521:LG
+oracle.jdbc.username=LG
+oracle.jdbc.password=G2413GvPzxYt
+
+oracle.jdbc.read.url=jdbc:oracle:thin:@oracle.demo.com:1521/LG
+oracle.jdbc.write.url=jdbc:oracle:thin:@oracle.demo.com:1521/LG
+oracle.jdbc.report.url=jdbc:oracle:thin:@oracle.demo.com:1521/LG
+oracle.jdbc.report.username=REPORT_TN
+oracle.jdbc.report.password=qwe123
+
+jdbc.initialSize = 50
+jdbc.maxActive = 500
+jdbc.maxIdle = 200
+jdbc.minIdle = 10
+jdbc.maxWait = 60000
+jdbc.removeAbandoned = true
+jdbc.removeAbandonedTimeout = 18000
+jdbc.timeBetweenEvictionRunsMillis = 60000
+jdbc.minEvictableIdleTimeMillis = 300000
+oracle.jdbc.validationQuery = SELECT 1 FROM DUAL
+jdbc.testWhileIdle = true 
+jdbc.testOnBorrow = false
+jdbc.testOnReturn = false
+jdbc.poolPreparedStatements = true
+jdbc.maxPoolPreparedStatementPerConnectionSize = 200
+jdbc.filters = stat
+jdbc.validationQueryTimeout=1

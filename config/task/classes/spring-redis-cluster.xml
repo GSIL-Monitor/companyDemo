@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	<!--
+		Redis 集群配置 
+	 -->
+	
+	<!-- 链接池配置 -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxTotal" value="1000"/> 
+		<property name="maxIdle" value="10"/> 
+		<property name="minIdle" value="1"/> 
+		<property name="maxWaitMillis" value="30000"/> 
+		<property name="testOnBorrow" value="true"/> 
+		<property name="testOnReturn" value="true"/> 
+		<property name="testWhileIdle" value="true"/>
+	</bean> 
+	
+	<!--
+		项目上线测试下该方案
+		Redis 3.0新推出的 Cluster 解决方案
+		
+		JedisClusterCommand 会自己负责连接的获取、释放
+	 -->
+	<bean id="redisCluster" class="redis.clients.jedis.JedisCluster">
+		<constructor-arg> 
+			<list> 
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg value="127.0.0.1"/>
+					<constructor-arg type="int" value="7101"/>
+				</bean> 
+				<bean class="redis.clients.jedis.JedisShardInfo"> 
+					<constructor-arg value="127.0.0.1"/>
+					<constructor-arg type="int" value="7102"/>
+				</bean> 
+				<bean class="redis.clients.jedis.JedisShardInfo"> 
+					<constructor-arg value="127.0.0.1"/> 
+					<constructor-arg type="int" value="7103"/>
+				</bean> 
+			</list>
+		</constructor-arg>
+		<constructor-arg ref="jedisPoolConfig"/> 
+	</bean>
+	
+	<!-- 
+		HASH一致 解决方案
+		按key的hash 分别读取不同的redis
+	 -->
+	<!--
+		@Autowired
+		ShardedJedisPool shardedPool;
+		//获取到setinel分配的 jedis
+		Jedis jedis = shardedPool.getResource(); 
+	 -->
+	<bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool" destroy-method="destroy">
+		<constructor-arg ref="jedisPoolConfig"/> 
+		<constructor-arg> 
+			<list> 
+				<bean class="redis.clients.jedis.JedisShardInfo">
+					<constructor-arg value="127.0.0.1"/>
+					<constructor-arg type="int" value="7101"/>
+					<constructor-arg value="instance:01"/> 
+				</bean> 
+				<bean class="redis.clients.jedis.JedisShardInfo"> 
+					<constructor-arg value="127.0.0.1"/>
+					<constructor-arg type="int" value="7102"/>
+					<constructor-arg value="instance:02"/> 
+				</bean> 
+				<bean class="redis.clients.jedis.JedisShardInfo"> 
+					<constructor-arg value="127.0.0.1"/> 
+					<constructor-arg type="int" value="7103"/>
+					<constructor-arg value="instance:03"/> 
+				</bean> 
+			</list>
+		</constructor-arg> 
+	</bean>
+	
+	<!-- 
+		主从切换 解决方案 
+	-->
+	<!--
+		使用一下配置注入
+		@Autowired
+		JedisSentinelPool sentinelPool;
+		//获取到setinel分配的 jedis
+		Jedis jedis = sentinelPool.getResource(); 
+	 -->
+	<bean id="redisSentinel" class="redis.clients.jedis.JedisSentinelPool">
+		 <constructor-arg index="0" value="mymaster" />
+		 <constructor-arg index="1">
+			 <set>
+			 	<!--
+			 		sentinel 实例地址
+			 		为set<String> 可多个
+			 		sentinel 官网地址 http://redis.io/topics/sentinel 
+			 	-->
+			 	<value>hostofsentinel:26379</value>
+			 	<value>hostofsentinel:26379</value>
+			 </set>
+		 </constructor-arg>
+		 <constructor-arg index="2" ref="jedisPoolConfig" />
+	 </bean>
+	 
+	 <!--
+	 	//修改原项目中的 redis 配置即可使用
+	 	@Autowired private JedisSentinelPool pool;
+		public void mymethod() {
+			 Jedis jedis = null;
+			 try {
+			 jedis = pool.getResource();
+			 jedis.hset(....
+			 } catch (JedisException je) {
+			 throw je;
+			 } finally {
+			 if (jedis != null) pool.returnResource(jedis);
+			 }
+		 } 
+	  -->
+	 
+	 <!-- 
+	 	还可用 ShardedJedisSentinelPool HASH一致堆叠主从切换 
+	 -->
+	 
+</beans>
