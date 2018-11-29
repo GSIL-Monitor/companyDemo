@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lgame.app.awardcenter.dao.IGameIssueDao" >
+  <resultMap id="BaseResultMap" type="com.lgame.app.awardcenter.domain.GameIssue" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="game_id" property="gameId" jdbcType="VARCHAR" />
+    <result column="issue" property="issue" jdbcType="VARCHAR" />
+    <result column="full_issue" property="fullIssue" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_ime" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="award_time" property="awardTime" jdbcType="VARCHAR" />
+    <result column="create_ime" property="createTime" jdbcType="VARCHAR" />
+    <result column="award_result" property="awardResult" jdbcType="VARCHAR" />
+    <result column="award_result_time" property="awardResultTime" jdbcType="TIMESTAMP" />
+    <result column="is_push" property="isPush" jdbcType="INTEGER" />
+    <result column="device_id" property="deviceId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, game_id, issue, full_issue, start_time, end_time, award_time, create_time, award_result, award_result_time,
+    is_push,device_id
+  </sql>
+  <insert id="insertIssueMMC" parameterType="com.lgame.app.awardcenter.domain.GameIssue"
+		useGeneratedKeys="false" keyProperty="id" flushCache="true">
+		<selectKey resultType="Integer" order="BEFORE" keyProperty="id">
+			SELECT GAME_ISSUE_${issueSuffix}_ID_SEQ.Nextval from dual
+		</selectKey>
+	        INSERT INTO GAME_ISSUE_${issueSuffix}
+	    <![CDATA[
+	        (	ID ,
+	        	GAME_ID ,
+	        	ISSUE ,
+	        	FULL_ISSUE ,
+	        	START_TIME ,
+	        	END_TIME ,
+	        	AWARD_TIME ,
+	        	AWARD_RESULT ,
+	        	AWARD_RESULT_TIME ,
+	        	IS_PUSH ,
+	        	PLATFORM,
+	        	DEVICE_ID
+	        ) VALUES (
+	        	#{id,javaType=Integer,jdbcType=DECIMAL} ,
+	        	#{issue.gameId,javaType=string,jdbcType=VARCHAR} ,
+	        	#{issue.issue,javaType=string,jdbcType=VARCHAR} ,
+	        	#{issue.fullIssue,javaType=string,jdbcType=VARCHAR} ,
+	        	#{issue.startTime,javaType=object,jdbcType=TIMESTAMP} ,
+	        	#{issue.endTime,javaType=object,jdbcType=TIMESTAMP} ,
+	        	#{issue.awardTime,javaType=object,jdbcType=TIMESTAMP} ,
+	        	#{issue.awardResult,javaType=string,jdbcType=VARCHAR} ,
+	        	#{issue.awardResultTime,javaType=object,jdbcType=TIMESTAMP} ,
+	        	#{issue.isPush,javaType=Integer,jdbcType=DECIMAL} ,
+	        	#{issue.platForm,javaType=Integer,jdbcType=DECIMAL} ,
+	        	#{issue.deviceId,javaType=string,jdbcType=VARCHAR}
+	        )
+	    ]]>
+	</insert>
+ 
+  <select id="queryIssueNoOpenAward" resultMap="BaseResultMap">
+    select 
+   <include refid="Base_Column_List" />
+    from game_issue_${issueSuffix}
+    <![CDATA[
+    where award_time < sysdate and award_result is null 
+    ]]>
+    order by start_time 
+  </select>
+  
+	
+	<update id="updateIssueOpenAward" parameterType="com.lgame.app.awardcenter.domain.GameIssue" >
+		update game_issue_${issueSuffix} set award_result = #{awardResult,javaType=string,jdbcType=VARCHAR} ,
+		award_result_time = #{awardResultTime,javaType=date,jdbcType=TIMESTAMP},
+		device_id = #{deviceId,javaType=string,jdbcType=VARCHAR} 
+		where  id=#{id} and award_result is null 
+	</update>
+  
+	<select id="queryPushAwardResult" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" />
+		from game_issue_${issueSuffix}
+		<![CDATA[
+		where award_result is not null and is_push = 0 and award_time < sysdate
+		]]>
+		order by start_time 
+	</select>
+  
+	<update id="updateIsPushSuccess" parameterType="com.lgame.app.awardcenter.domain.GameIssue" >
+		update game_issue_${issueSuffix} set is_push = 1 
+		where  id=#{id} and is_push = 0
+	</update>
+	
+	
+	<select id="queryIssueAwardResult" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" />
+		from game_issue_${issueSuffix}
+		<![CDATA[
+		where game_id = #{gameId} and full_issue = #{fullIssue} and platform = #{platform}
+		order by AWARD_RESULT_TIME desc
+		]]>
+	</select>
+  
+	<select id="queryIssueNoGetKillerNumber" resultMap="BaseResultMap">
+ 		select 
+		<include refid="Base_Column_List" />
+ 		from game_issue_${issueSuffix}
+ 		<![CDATA[
+		where award_time < sysdate + 1 
+		and start_time >= sysdate
+		]]>
+		and game_id in 
+				<foreach collection="gameIds" index="index" item="gameId"
+					open="(" separator="," close=")">
+					#{gameId}
+				</foreach>
+		and get_killer = '0'
+		and getting_killer = '0'
+		order by start_time 
+	</select>
+	
+	<update id="updateGetKillerNumberSuccess" parameterType="com.lgame.app.awardcenter.domain.GameIssue" >
+		update game_issue_${issueSuffix} set get_killer = 1 
+		where id=#{id}
+	</update>
+	
+	<update id="updateGettingKillerNumberStatus" parameterType="com.lgame.app.awardcenter.domain.GameIssue" >
+		update game_issue_${issueSuffix} set getting_killer = ${targetStatus}
+		where id=#{id}
+		<if test="originStatus != null">
+			and getting_killer = ${originStatus}
+		</if> 
+	</update>
+</mapper>
