@@ -1,0 +1,37 @@
+#GPO ESB
+#esb.core.url=http://esbonline.getidenaa.com/ESB/main/core
+#esb.token.url=http://esbonline.getidenaa.com/ESB/interface/token
+
+#ACG ESB
+esb.core.url=http://esbonline.agcjxnow.com/ESB/main/core
+esb.token.url=http://esbonline.agcjxnow.com/ESB/interface/token
+esb.form.url=/payment_platform/form/toForm
+
+#Used to call esb payment
+esb.route=payment
+esb.appid=ff8080815d04db77015d05308ddd0148
+esb.callbackappid=ff8080815dc4d113015e09ac82ce1f4a
+
+ssl.transfer.url=http://
+#ssl.transfer.url=https://ssltransfer.cbjxnower.com/
+
+esb_callback_domain=esbcallbackacg.agcjxnow.com
+esb_callback_domain2=esbcallbackacg.phacg.com
+esb.pay.domain.split.key=@@@
+esb.db.name=TW_DB01
+
+#Map key for payment , Make sure these keys same to project payment_platform's values
+payment.platform.ordernumber=paymentOrderNumber
+payment.platform.merchantkey=paymentMerchantKey
+payment.platform.appid=paymentAppid
+payment.platform.banktype=paymentBankType
+payment.platform.data=paymentData
+payment.platform.sendurl=paymentSendUrl
+payment.platform.restype=paymentResType
+payment.platform.payname=paymentPayName
+payment.platform.callbackappid=paymentCallbackAppid
+payment.platform.paymoney=paymoney
+payment.platform.merchantConsole=paymentMerchantConsole
+payment.platform.merchantNo=merchantNo
+payment.platform.postData=postData
+

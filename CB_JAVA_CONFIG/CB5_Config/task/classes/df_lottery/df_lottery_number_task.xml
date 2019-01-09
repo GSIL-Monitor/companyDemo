@@ -1,0 +1,2472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+
+xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+<!-- 万人牛牛OGNN开奖取号 -->
+	<bean id="getOGNNNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getOGNNNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getOGNNNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="OGNNIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 万人牛牛OGNN结算任务 -->
+	<bean id="clearOGNNTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearOGNNDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearOGNNDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="OGNNLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+<!-- 凤凰快3彩开奖取号 -->
+  <bean id="getPH1K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <property name="jobDetail" ref="getPH1K3NumberDetail" />
+    <property name="cronExpression" value="* 0/5 * * * ?" />
+  </bean>
+  <bean id="getPH1K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <property name="jobClass">
+      <!-- 上面的任务代理类 -->
+      <value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+    </property>
+    <property name="jobDataAsMap">
+      <map>
+        <entry key="targetObject" value="PH1K3IssueGetNumberTask" />
+        <entry key="targetMethod" value="excuteTask" />
+      </map>
+    </property>
+    <!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+    <property name="durability" value="true" />   
+  </bean>
+  <!-- 凤凰快3彩结算任务 -->
+  <bean id="clearPH1K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <property name="jobDetail" ref="clearPH1K3Detail" />
+    <property name="cronExpression" value="0/5 * * * * ?" />
+  </bean>
+  <bean id="clearPH1K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <property name="jobClass">
+      <!-- 上面的任务代理类 -->
+      <value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+    </property>
+    <property name="jobDataAsMap">
+      <map>
+        <entry key="targetObject" value="PH1K3LotteryClearTask" />
+        <entry key="targetMethod" value="excuteTask" />
+      </map>
+    </property>
+    <!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+    <property name="durability" value="true" />   
+  </bean> 
+  <!-- 凤凰3快3彩开奖取号 -->
+  <bean id="getPH3K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <property name="jobDetail" ref="getPH3K3NumberDetail" />
+    <property name="cronExpression" value="* 0/5 * * * ?" />
+  </bean>
+  <bean id="getPH3K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <property name="jobClass">
+      <!-- 上面的任务代理类 -->
+      <value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+    </property>
+    <property name="jobDataAsMap">
+      <map>
+        <entry key="targetObject" value="PH3K3IssueGetNumberTask" />
+        <entry key="targetMethod" value="excuteTask" />
+      </map>
+    </property>
+    <!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+    <property name="durability" value="true" />   
+  </bean>
+  <!-- 凤凰3快3彩开奖取号 -->
+  <bean id="getPH5K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <property name="jobDetail" ref="getPH5K3NumberDetail" />
+    <property name="cronExpression" value="* 0/5 * * * ?" />
+  </bean>
+  <bean id="getPH5K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <property name="jobClass">
+      <!-- 上面的任务代理类 -->
+      <value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+    </property>
+    <property name="jobDataAsMap">
+      <map>
+        <entry key="targetObject" value="PH5K3IssueGetNumberTask" />
+        <entry key="targetMethod" value="excuteTask" />
+      </map>
+    </property>
+    <!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+    <property name="durability" value="true" />   
+  </bean>
+  <!-- 凤凰5快3彩结算任务 -->
+  <bean id="clearPH5K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <property name="jobDetail" ref="clearPH5K3Detail" />
+    <property name="cronExpression" value="0/5 * * * * ?" />
+  </bean>
+  <bean id="clearPH5K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <property name="jobClass">
+      <!-- 上面的任务代理类 -->
+      <value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+    </property>
+    <property name="jobDataAsMap">
+      <map>
+        <entry key="targetObject" value="PH5K3LotteryClearTask" />
+        <entry key="targetMethod" value="excuteTask" />
+      </map>
+    </property>
+    <!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+    <property name="durability" value="true" />   
+  </bean> 
+  <!-- 凤凰5快3彩结算任务 -->
+  <bean id="clearPH3K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <property name="jobDetail" ref="clearPH3K3Detail" />
+    <property name="cronExpression" value="0/5 * * * * ?" />
+  </bean>
+  <bean id="clearPH3K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <property name="jobClass">
+      <!-- 上面的任务代理类 -->
+      <value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+    </property>
+    <property name="jobDataAsMap">
+      <map>
+        <entry key="targetObject" value="PH3K3LotteryClearTask" />
+        <entry key="targetMethod" value="excuteTask" />
+      </map>
+    </property>
+    <!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+    <property name="durability" value="true" />   
+  </bean> 
+	<!-- 东方一分彩开奖取号 -->
+	<bean id="getJLFFCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getJLFFCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getJLFFCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="jlffcIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 东方一分彩结算任务 -->
+	<bean id="clearJLFFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearJLFFCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearJLFFCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="jlffcLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 东方三分彩开奖取号 -->
+	<bean id="getTSFFCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getTSFFCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getTSFFCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="tsffcIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 东方三分彩结算任务 -->
+	<bean id="clearTSFFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearTSFFCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearTSFFCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="tsffcLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 东方五分彩开奖取号 -->
+	<bean id="getTFFFCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getTFFFCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getTFFFCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="tfffcIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 东方五分彩结算任务 -->
+	<bean id="clearTFFFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearTFFFCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearTFFFCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="tfffcLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 东方PK10一分彩开奖取号 -->
+	<bean id="getJLPK10NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getJLPK10NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getJLPK10NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="jlpk10IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 东方PK10一分彩结算任务 -->
+	<bean id="clearJLPK10Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearJLPK10Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearJLPK10Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="jlpk10LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 东方PK10三分彩开奖取号 -->
+	<bean id="getTSPK10NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getTSPK10NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getTSPK10NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="tspk10IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 东方PK10三分彩结算任务 -->
+	<bean id="clearTSPK10Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearTSPK10Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearTSPK10Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="tspk10LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 东方PK10五分彩开奖取号 -->
+	<bean id="getTFPK10NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getTFPK10NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getTFPK10NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="tfpk10IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 东方PK10五分彩结算任务 -->
+	<bean id="clearTFPK10Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearTFPK10Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearTFPK10Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="tfpk10LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 快3一分彩开奖取号 -->
+	<bean id="getOG1K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getOG1K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getOG1K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="og1k3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 快3一分彩结算任务 -->
+	<bean id="clearOG1K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearOG1K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearOG1K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="og1k3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 中福快3彩开奖取号 -->
+	<bean id="getCF1K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCF1K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCF1K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="cf1k3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 中福快3彩结算任务 -->
+	<bean id="clearCF1K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCF1K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCF1K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="cf1k3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+		<!-- 六合一分彩开奖取号 -->
+	<bean id="getOG1LHCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getOG1LHCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getOG1LHCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="og1lhcIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 六合一分彩结算任务 -->
+	<bean id="clearOG1LHCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearOG1LHCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearOG1LHCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="og1lhcLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	<!-- 六合三分彩开奖取号 -->
+	<bean id="getOG3LHCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getOG3LHCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getOG3LHCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="og3lhcIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 六合三分彩结算任务 -->
+	<bean id="clearOG3LHCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearOG3LHCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearOG3LHCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="og3lhcLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 六合五分彩开奖取号 -->
+	<bean id="getOG5LHCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getOG5LHCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getOG5LHCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="og5lhcIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 六合五分彩结算任务 -->
+	<bean id="clearOG5LHCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearOG5LHCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearOG5LHCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="og5lhcLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 傳統彩CTSSC1分彩开奖取号 -->
+	<bean id="getCTOG1SSCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTOG1SSCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTOG1SSCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG1SSCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統彩CTSSC1分彩结算任务 -->
+	<bean id="clearCTOG1SSCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTOG1SSCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTOG1SSCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG1SSCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+		<!-- 傳統CTBSC1分彩开奖取号 -->
+	<bean id="getCTOG1BSCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTOG1BSCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTOG1BSCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG1BSCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統CTBSC1分彩结算任务 -->
+	<bean id="clearCTOG1BSCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTOG1BSCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTOG1BSCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG1BSCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+
+	<!-- 中福11選五开奖取号 -->
+	<bean id="getCF111X5NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCF111X5NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCF111X5NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CF111X5IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 中福11選五结算任务 -->
+	<bean id="clearCF111X5Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCF111X5Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCF111X5Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CF111X5LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 六合10分彩 开奖取号 -->
+	<bean id="getOG10LHCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getOG10LHCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getOG10LHCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="OG10LHCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!--  六合10分彩结算任务 -->
+	<bean id="clearOG10LHCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearOG10LHCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearOG10LHCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="OG10LHCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 一分11選五开奖取号 -->
+	<bean id="getOG111X5NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getOG111X5NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getOG111X5NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="OG111X5IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 一分11選五结算任务 -->
+	<bean id="clearOG111X5Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearOG111X5Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearOG111X5Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="OG111X5LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 傳統CTOG1K3开奖取号 -->
+	<bean id="getCTOG1K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTOG1K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTOG1K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG1K3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統CTOG1K3结算任务 -->
+	<bean id="clearCTOG1K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTOG1K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTOG1K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG1K3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 中福赛车开奖取号 -->
+	<bean id="getCF1PK10NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCF1PK10NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCF1PK10NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CF1PK10IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 中福赛车结算任务 -->
+	<bean id="clearCF1PK10Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCF1PK10Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCF1PK10Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CF1PK10LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 中福时时彩开奖取号 -->
+	<bean id="getCF1FFCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCF1FFCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCF1FFCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CF1FFCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 中福时时彩结算任务 -->
+	<bean id="clearCF1FFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCF1FFCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCF1FFCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CF1FFCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 幸运赛车开奖取号 -->
+	<bean id="getXY1PK10NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getXY1PK10NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getXY1PK10NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="XY1PK10IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 幸运赛车结算任务 -->
+	<bean id="clearXY1PK10Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearXY1PK10Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearXY1PK10Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="XY1PK10LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 幸运时时彩开奖取号 -->
+	<bean id="getXY1FFCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getXY1FFCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getXY1FFCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="XY1FFCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 幸运时时彩结算任务 -->
+	<bean id="clearXY1FFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearXY1FFCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearXY1FFCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="XY1FFCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 幸运快3开奖取号 -->
+	<bean id="getXY1K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getXY1K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getXY1K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="XY1K3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 幸运快3结算任务 -->
+	<bean id="clearXY1K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearXY1K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearXY1K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="XY1K3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 中福六合彩一分彩开奖取号 -->
+	<bean id="getCF1LHCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCF1LHCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCF1LHCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="cf1lhcIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 中福六合彩一分结算任务 -->
+	<bean id="clearCF1LHCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCF1LHCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCF1LHCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="cf1lhcLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>	
+	<!-- 中福五分六合彩开奖取号 -->
+	<bean id="getCF5LHCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCF5LHCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCF5LHCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="cf5lhcIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 中福五分六合彩结算任务 -->
+	<bean id="clearCF5LHCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCF5LHCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCF5LHCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="cf5lhcLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>	
+	
+		<!-- 中福十分六合彩开奖取号 -->
+	<bean id="getCF10LHCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCF10LHCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCF10LHCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="cf10lhcIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 中福十分六合彩结算任务 -->
+	<bean id="clearCF10LHCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCF10LHCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCF10LHCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="cf10lhcLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+<!-- 幸運六合彩一分彩开奖取号 -->
+	<bean id="getXY1LHCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getXY1LHCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getXY1LHCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="xy1lhcIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	
+	<!-- 幸運六合彩一分结算任务 -->
+	<bean id="clearXY1LHCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearXY1LHCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearXY1LHCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="xy1lhcLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	<!-- 幸運五分六合彩开奖取号 -->
+	<bean id="getXY5LHCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getXY5LHCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getXY5LHCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="xy5lhcIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 幸運五分六合彩结算任务 -->
+	<bean id="clearXY5LHCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearXY5LHCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearXY5LHCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="xy5lhcLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>	
+	
+		<!-- 幸運十分六合彩开奖取号 -->
+	<bean id="getXY10LHCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getXY10LHCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getXY10LHCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="xy10lhcIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 幸運十分六合彩结算任务 -->
+	<bean id="clearXY10LHCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearXY10LHCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearXY10LHCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="xy10lhcLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>	
+	<!-- 快3三分彩开奖取号 -->
+	<bean id="getOG3K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getOG3K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getOG3K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="og3k3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 快3三分彩结算任务 -->
+	<bean id="clearOG3K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearOG3K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearOG3K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="og3k3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>	
+<!-- 快3五分彩开奖取号 -->
+	<bean id="getOG5K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getOG5K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getOG5K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="og5k3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 快3五分彩结算任务 -->
+	<bean id="clearOG5K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearOG5K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearOG5K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="og5k3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>	
+<!-- 中福快3三分彩开奖取号 -->
+	<bean id="getCF3K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCF3K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCF3K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="cf3k3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 中福快3三分彩结算任务 -->
+	<bean id="clearCF3K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCF3K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCF3K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="cf3k3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>		
+	<!-- 中福快3五分彩开奖取号 -->
+	<bean id="getCF5K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCF5K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCF5K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="cf5k3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 中福快3五分彩结算任务 -->
+	<bean id="clearCF5K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCF5K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCF5K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="cf5k3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>	
+	<!-- 幸運快3三分彩开奖取号 -->
+	<bean id="getXY3K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getXY3K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getXY3K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="xy3k3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 幸運快3三分彩结算任务 -->
+	<bean id="clearXY3K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearXY3K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearXY3K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="xy3k3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>	
+	<!-- 幸運快3五分彩开奖取号 -->
+	<bean id="getXY5K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getXY5K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getXY5K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="xy5k3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 幸運快3五分彩结算任务 -->
+	<bean id="clearXY5K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearXY5K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearXY5K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="xy5k3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>	
+	
+	<!-- 傳統CTK3 3分彩开奖取号 -->
+	<bean id="getCTOG3K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTOG3K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTOG3K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG3K3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統CTK3 3分彩结算任务 -->
+	<bean id="clearCTOG3K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTOG3K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTOG3K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG3K3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 傳統CTK3 5分彩开奖取号 -->
+	<bean id="getCTOG5K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTOG5K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTOG5K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG5K3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 傳統CTK3 5分彩结算任务 -->
+	<bean id="clearCTOG5K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTOG5K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTOG5K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG5K3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 傳統CTK3 中福3分彩开奖取号 -->
+	<bean id="getCTCF3K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTCF3K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTCF3K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTCF3K3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 傳統CTK3 中福3分彩结算任务 -->
+	<bean id="clearCTCF3K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTCF3K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTCF3K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTCF3K3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 傳統幸運快3三分彩开奖取号 -->
+	<bean id="getCTXY3K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTXY3K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTXY3K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTXY3K3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 傳統幸運快3三分彩结算任务 -->
+	<bean id="clearCTXY3K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTXY3K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTXY3K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTXY3K3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 傳統幸運快3五分彩开奖取号 -->
+	<bean id="getCTXY5K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTXY5K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTXY5K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTXY5K3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 傳統幸運快3五分彩结算任务 -->
+	<bean id="clearCTXY5K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTXY5K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTXY5K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTXY5K3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+
+	<!-- 傳統中福快3五分彩开奖取号 -->
+	<bean id="getCTCF5K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTCF5K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTCF5K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTCF5K3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 傳統中福快3五分彩结算任务 -->
+	<bean id="clearCTCF5K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTCF5K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTCF5K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTCF5K3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+
+	<!-- 傳統幸運CTK31分彩开奖取号 -->
+	<bean id="getCTXY1K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTXY1K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTXY1K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTXY1K3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統幸運CTK31分彩结算任务 -->
+	<bean id="clearCTXY1K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTXY1K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTXY1K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTXY1K3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統中福CTK31分彩开奖取号 -->
+	<bean id="getCTCF1K3NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTCF1K3NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTCF1K3NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTCF1K3IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統中福CTK31分彩结算任务 -->
+	<bean id="clearCTCF1K3Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTCF1K3Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTCF1K3Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTCF1K3LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+
+	<!-- 傳統3分彩賽車开奖取号 -->
+	<bean id="getCTOG3BSCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTOG3BSCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTOG3BSCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG3BSCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統3分彩賽車结算任务 -->
+	<bean id="clearCTOG3BSCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTOG3BSCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTOG3BSCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG3BSCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 傳統5分彩賽車开奖取号 -->
+	<bean id="getCTOG5BSCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTOG5BSCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTOG5BSCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG5BSCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統5分彩賽車结算任务 -->
+	<bean id="clearCTOG5BSCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTOG5BSCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTOG5BSCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG5BSCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 傳統幸運1分彩賽車开奖取号 -->
+	<bean id="getCTXY1BSCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTXY1BSCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTXY1BSCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTXY1BSCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統幸運1分彩賽車结算任务 -->
+	<bean id="clearCTXY1BSCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTXY1BSCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTXY1BSCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTXY1BSCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 傳統幸運3分彩賽車开奖取号 -->
+	<bean id="getCTXY3BSCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTXY3BSCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTXY3BSCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTXY3BSCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統幸運3分彩賽車结算任务 -->
+	<bean id="clearCTXY3BSCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTXY3BSCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTXY3BSCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTXY3BSCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 傳統幸運5分彩賽車开奖取号 -->
+	<bean id="getCTXY5BSCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTXY5BSCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTXY5BSCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTXY5BSCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統幸運5分彩賽車结算任务 -->
+	<bean id="clearCTXY5BSCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTXY5BSCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTXY5BSCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTXY5BSCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 傳統中福1分彩賽車开奖取号 -->
+	<bean id="getCTCF1BSCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTCF1BSCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTCF1BSCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTCF1BSCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統中福1分彩賽車结算任务 -->
+	<bean id="clearCTCF1BSCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTCF1BSCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTCF1BSCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTCF1BSCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 傳統中福3分彩賽車开奖取号 -->
+	<bean id="getCTCF3BSCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTCF3BSCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTCF3BSCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTCF3BSCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統中福3分彩賽車结算任务 -->
+	<bean id="clearCTCF3BSCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTCF3BSCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTCF3BSCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTCF3BSCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 傳統中福5分彩賽車开奖取号 -->
+	<bean id="getCTCF5BSCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTCF5BSCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTCF5BSCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTCF5BSCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統中福5分彩賽車结算任务 -->
+	<bean id="clearCTCF5BSCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTCF5BSCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTCF5BSCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTCF5BSCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+
+	<!-- 傳統幸運彩CTSSC1分彩开奖取号 -->
+	<bean id="getCTXY1SSCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTXY1SSCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTXY1SSCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTXY1SSCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統幸運彩CTSSC1分彩结算任务 -->
+	<bean id="clearCTXY1SSCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTXY1SSCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTXY1SSCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTXY1SSCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 傳統中福彩CTSSC1分彩开奖取号 -->
+	<bean id="getCTCF1SSCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTCF1SSCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTCF1SSCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTCF1SSCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統中福彩CTSSC1分彩结算任务 -->
+	<bean id="clearCTCF1SSCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTCF1SSCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTCF1SSCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTCF1SSCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 1.5分彩OG15FFC分彩开奖取号 -->
+	<bean id="getOG15FFCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getOG15FFCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getOG15FFCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="OG15FFCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 1.5分彩OG15FFC分彩结算任务 -->
+	<bean id="clearOG15FFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearOG15FFCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearOG15FFCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="OG15FFCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 傳統1.5分彩CTOG15FFC分彩开奖取号 -->
+	<bean id="getCTOG15FFCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTOG15FFCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTOG15FFCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG15FFCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統1.5分彩CTOG15FFC分彩结算任务 -->
+	<bean id="clearCTOG15FFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTOG15FFCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTOG15FFCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG15FFCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 1.5分賽車OG15PK10分彩开奖取号 -->
+	<bean id="getOG15PK10NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getOG15PK10NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getOG15PK10NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="OG15PK10IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 1.5分賽車OG15PK10分彩结算任务 -->
+	<bean id="clearOG15PK10Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearOG15PK10Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearOG15PK10Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="OG15PK10LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 傳統1.5分賽車CTOG15PK10分彩开奖取号 -->
+	<bean id="getCTOG15PK10NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCTOG15PK10NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCTOG15PK10NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG15PK10IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 傳統1.5分賽車CTOG15PK10分彩结算任务 -->
+	<bean id="clearCTOG15PK10Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCTOG15PK10Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCTOG15PK10Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CTOG15PK10LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+
+	<!-- OGLK28开奖取号 -->
+	<bean id="getOG1LK28NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getOG1LK28NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getOG1LK28NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="OG1LK28IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- OGLK28结算任务 -->
+	<bean id="clearOG1LK28Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearOG1LK28Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearOG1LK28Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="OG1LK28LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- CF1LK28开奖取号 -->
+	<bean id="getCF1LK28NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getCF1LK28NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getCF1LK28NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CF1LK28IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- CF1LK28结算任务 -->
+	<bean id="clearCF1LK28Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearCF1LK28Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearCF1LK28Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="CF1LK28LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- XY1LK28开奖取号 -->
+	<bean id="getXY1LK28NumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getXY1LK28NumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getXY1LK28NumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="XY1LK28IssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- XY1LK28结算任务 -->
+	<bean id="clearXY1LK28Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearXY1LK28Detail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearXY1LK28Detail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="XY1LK28LotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>	
+</beans>

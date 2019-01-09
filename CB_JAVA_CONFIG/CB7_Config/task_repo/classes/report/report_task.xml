@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+
+xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	
+	<!-- 彩票报表汇总 -->
+	<bean id="cpreportTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="cpreportDetail" />
+		<!-- 每天 00:00运行一次 -->
+		<property name="cronExpression" value="0 0 0 * * ?" />
+	</bean>
+	<bean id="cpreportDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="cpReportTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 终端报表查询 -->
+	<bean id="deviceTotalReportTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="deviceTotalReportJobDetail" />
+		<!-- 每次执行间隔2小时 -->
+		<property name="cronExpression" value="0 0/6 * * * ?" />
+	</bean>
+	<bean id="deviceTotalReportJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		
+			<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="reportScanner" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	<!-- 终端报表查询 END -->
+
+	<!-- 综合报表查询 -->
+	<bean id="totalViewReportTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="totalViewReportDetail" />
+		<!-- 每次执行间隔2小时 -->
+		<property name="cronExpression" value="0 4/5 * * * ?" />
+	</bean>
+	<bean id="totalViewReportDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+	
+	<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="totalViewReportTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	<!-- 综合报表查询 END -->
+	
+	
+	<!-- 首充报表查询 -->
+	<bean id="firstDepositReporTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="firstDepositReporDetail" />
+		<!-- 每次执行间隔2小时 -->
+		<property name="cronExpression" value="0 1/5 * * * ?" />
+	</bean>
+	<bean id="firstDepositReporDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="firstDepositReportTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+		
+	</bean>
+	<!-- 首充报表查询 END -->
+	
+	<!-- 會員报表查询 -->
+	<bean id="memberReportTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="memberReportDetail" />
+		<!-- 每次执行间隔5分鐘 -->
+		<property name="cronExpression" value="0 2/5 * * * ?" />
+	</bean>
+	<bean id="memberReportDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		
+	<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="memberReportTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	<!-- 會員报表查询 END -->
+	
+	
+	<!-- 等級报表汇总 -->
+	<bean id="levelReportTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="levelReportDetail" />
+		<!-- 每5分鐘执行一次 -->
+		<property name="cronExpression" value="0 3/5 * * * ?" />
+	</bean>
+	<bean id="levelReportDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		
+	<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="levelReportTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	<!-- 等級报表汇总 END-->
+	
+	
+	<!-- 在線人數統計 -->
+	<bean id="onlineMemberCountTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="onlineMemberCountDetail" />
+		<!-- 每5分鐘执行一次 -->
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="onlineMemberCountDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		
+	<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="onlineMemberCountTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	<!-- 在線人數統計 END-->
+	
+</beans>
