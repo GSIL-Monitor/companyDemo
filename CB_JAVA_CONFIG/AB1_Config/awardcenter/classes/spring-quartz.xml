@@ -74,7 +74,9 @@ xmlns:util="http://www.springframework.org/schema/util"
 				<ref bean="openAwardCF1LK28Trigger" />
 				<ref bean="openAwardXY1LK28Trigger" />		
 				<ref bean="openAwardNNTrigger" />
-			</list>
+				<ref bean="openAwardPH1FFCTrigger" />
+				<ref bean="openAwardTC1FFCTrigger" />
+				</list>
 		</property>
 		<!-- quartz配置文件路徑, 指向cluster配置 -->
  		<property name="configLocation" value="classpath:quartz.properties" />		
@@ -1231,5 +1233,45 @@ xmlns:util="http://www.springframework.org/schema/util"
 		</property>
 		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false -->
 		<property name="durability" value="true" />
+	</bean>
+
+		<!--鳳凰時時彩  1分開獎任务 -->
+	<bean id="openAwardPH1FFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="openAwardPH1FFC" />
+		<property name="cronExpression" value="* * * * * ?" />
+	</bean>
+	<bean id="openAwardPH1FFC" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.awardcenter.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="issueGetAwardPH1FFC" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!--騰訊時時彩  1分開獎任务 -->
+	<bean id="openAwardTC1FFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="openAwardTC1FFC" />
+		<property name="cronExpression" value="* * * * * ?" />
+	</bean>
+	<bean id="openAwardTC1FFC" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.awardcenter.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="issueGetAwardTC1FFC" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
 	</bean>	
 </beans>

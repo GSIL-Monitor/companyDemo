@@ -2466,5 +2466,317 @@ xmlns:util="http://www.springframework.org/schema/util"
 		</property>
 		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
 		<property name="durability" value="true" />	
+	</bean>
+
+	<!-- PH1FFC开奖取号 -->
+	<bean id="getPH1FFCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getPH1FFCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getPH1FFCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="PH1FFCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- PH1FFC结算任务 -->
+	<bean id="clearPH1FFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearPH1FFCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearPH1FFCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="PH1FFCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- PH15FFC开奖取号 -->
+	<bean id="getPH15FFCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getPH15FFCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getPH15FFCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="PH15FFCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- PH15FFC结算任务 -->
+	<bean id="clearPH15FFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearPH15FFCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearPH15FFCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="PH15FFCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- PH3FFC开奖取号 -->
+	<bean id="getPH3FFCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getPH3FFCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getPH3FFCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="PH3FFCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- PH3FFC结算任务 -->
+	<bean id="clearPH3FFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearPH3FFCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearPH3FFCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="PH3FFCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- PH5FFC开奖取号 -->
+	<bean id="getPH5FFCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getPH5FFCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getPH5FFCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="PH5FFCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- PH5FFC结算任务 -->
+	<bean id="clearPH5FFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearPH5FFCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearPH5FFCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="PH5FFCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- TC1FFC开奖取号 -->
+	<bean id="getTC1FFCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getTC1FFCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getTC1FFCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="TC1FFCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- TC1FFC结算任务 -->
+	<bean id="clearTC1FFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearTC1FFCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearTC1FFCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="TC1FFCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- TC15FFC开奖取号 -->
+	<bean id="getTC15FFCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getTC15FFCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getTC15FFCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="TC15FFCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- TC15FFC结算任务 -->
+	<bean id="clearTC15FFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearTC15FFCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearTC15FFCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="TC15FFCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- TC3FFC开奖取号 -->
+	<bean id="getTC3FFCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getTC3FFCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getTC3FFCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="TC3FFCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- TC3FFC结算任务 -->
+	<bean id="clearTC3FFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearTC3FFCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearTC3FFCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="TC3FFCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- TC5FFC开奖取号 -->
+	<bean id="getTC5FFCNumberTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getTC5FFCNumberDetail" />
+		<property name="cronExpression" value="* 0/5 * * * ?" />
+	</bean>
+	<bean id="getTC5FFCNumberDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="TC5FFCIssueGetNumberTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- TC5FFC结算任务 -->
+	<bean id="clearTC5FFCTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="clearTC5FFCDetail" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean id="clearTC5FFCDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="TC5FFCLotteryClearTask" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
 	</bean>	
 </beans>

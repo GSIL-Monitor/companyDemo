@@ -103,6 +103,7 @@ xmlns:util="http://www.springframework.org/schema/util"
 				<ref bean="profitLossCTOG15PK10Trigger"/>
 				<ref bean="profitLossCTOG15PK102Trigger"/>
 
+				
 				<ref bean="profitLossBSCMMCTrigger"/>
 
 				<ref bean="profitLossOG1LK28Trigger"/>
@@ -112,7 +113,18 @@ xmlns:util="http://www.springframework.org/schema/util"
           		<ref bean="profitLossPH3K3Trigger"/>  
           		<ref bean="profitLossPH5K3Trigger"/>
           		<ref bean="profitLossOGNNTrigger"/>
-				<ref bean="profitLossEfficientForNNTrigger"/>			
+				<ref bean="profitLossEfficientForNNTrigger"/>
+				<ref bean="profitLossPH15FFCTrigger"/>
+				<ref bean="profitLossPH15FFC2Trigger"/>					
+				<ref bean="profitLossTC15FFCTrigger"/>
+				<ref bean="profitLossTC15FFC2Trigger"/>					
+				<ref bean="profitLossPH1FFCTrigger"/>
+	  			<ref bean="profitLossPH3FFCTrigger"/>
+	  			<ref bean="profitLossPH5FFCTrigger"/>
+				<ref bean="profitLossTC1FFCTrigger"/>
+	  			<ref bean="profitLossTC3FFCTrigger"/>
+	  			<ref bean="profitLossTC5FFCTrigger"/>
+				
 			</list>
 		</property>
 		
