@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lgame.app.chart.dao.IGameIssueDao" >
+  <resultMap id="BaseResultMap" type="com.lgame.app.chart.domain.GameIssue" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="game_id" property="gameId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="issue" property="issue" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="award_time" property="awardTime" jdbcType="TIMESTAMP" />
+    <result column="full_issue" property="fullIssue" jdbcType="VARCHAR" />
+    <result column="play_id" property="playId" jdbcType="VARCHAR" />
+    <result column="issue_date" property="issueDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, game_id, status, issue, start_time, end_time, award_time, full_issue, play_id, 
+    issue_date
+  </sql>
+  
+  <insert id="insert" parameterType="com.lgame.app.chart.domain.GameIssue" useGeneratedKeys="false" keyProperty="id" flushCache="true">
+	 INSERT into game_issue${issueSuffix} 
+      (id,game_id, status, 
+      issue, start_time, end_time, 
+      award_time, full_issue, play_id, 
+      issue_date) 
+		select GAME_ISSUE_ID_SEQ.nextval, A.* from(
+	 <foreach collection="issueList" item="issue" index="index" separator="UNION">
+	 	 	select 
+      	#{issue.gameId,jdbcType=VARCHAR}, #{issue.status,jdbcType=BIT}, 
+      	#{issue.issue,jdbcType=VARCHAR}, #{issue.startTime,jdbcType=TIMESTAMP}, #{issue.endTime,jdbcType=TIMESTAMP}, 
+      	#{issue.awardTime,jdbcType=TIMESTAMP}, #{issue.fullIssue,jdbcType=VARCHAR}, #{issue.playId,jdbcType=VARCHAR}, 
+      	#{issue.issueDate,jdbcType=DATE}
+     	from dual
+  	</foreach> 
+		)A	 
+  </insert>
+	<insert id="insertIssueMMC" parameterType="com.lgame.app.chart.domain.GameIssue" >
+		insert into game_issue_mmc (id, game_id, status, 
+		issue, start_time, end_time, 
+		award_time, full_issue, play_id, 
+		issue_date) VALUES
+		(#{issue.id,jdbcType=INTEGER},#{issue.gameId,jdbcType=VARCHAR}, #{issue.status,jdbcType=BIT}, 
+		#{issue.issue,jdbcType=VARCHAR}, #{issue.startTime,jdbcType=TIMESTAMP}, #{issue.endTime,jdbcType=TIMESTAMP}, 
+		#{issue.awardTime,jdbcType=TIMESTAMP}, #{issue.fullIssue,jdbcType=VARCHAR}, #{issue.playId,jdbcType=VARCHAR}, 
+		#{issue.issueDate,jdbcType=DATE})
+	</insert>
+  
+  
+ <select id="findListByGameIdAndDate" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from game_issue${issueSuffix}
+    where game_id = #{gameId} and issue_date = trunc(#{date})
+    order by start_time 
+  </select>
+   <select id="findListByGameIdAndAfterDate" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from game_issue${issueSuffix}
+    where game_id = #{gameId} and  <![CDATA[ issue_date >=trunc(#{date})]]> 
+    order by start_time 
+  </select>
+ <select id="selectByTimeAndGameId" resultMap="BaseResultMap" >
+    select * from (
+    select 
+    <include refid="Base_Column_List" />
+    from game_issue${issueSuffix}
+    where game_id = #{gameId} and end_time &gt; #{now}
+    order by end_time )
+    where rownum=1
+  </select>
+ <select id="findListByGameIdAndBeforeTimeLimit" resultMap="BaseResultMap" >
+    select * from (
+    select 
+    <include refid="Base_Column_List" />
+ 	<![CDATA[ 
+    from game_issue${issueSuffix}
+    where game_id = #{gameId} and end_time < #{now} 
+    order by end_time desc )
+    where rownum <= #{top} 
+    ]]>
+  </select>
+  <select id="findListByGameIdAndAfterTimeLimit" resultMap="BaseResultMap" >
+    select * from (
+    select
+    <include refid="Base_Column_List" />
+    <![CDATA[
+    from game_issue${issueSuffix}
+    where game_id = #{gameId} and  end_time >= #{now} 
+    order by end_time asc )
+    where rownum <= #{top} 
+    ]]>
+  </select>
+    <update id="updateByPrimaryKey" parameterType="com.lgame.app.chart.domain.GameIssue" >
+    update game_issue
+    set  start_time = #{startTime,jdbcType=TIMESTAMP},
+    end_time = #{endTime,jdbcType=TIMESTAMP},
+    award_time = #{awardTime,jdbcType=TIMESTAMP},
+      issue_date = #{issueDate,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByGameIdAndAfterTime">
+  	delete from game_issue${issueSuffix}
+    where game_id = #{gameId} and <![CDATA[ end_time >=#{now}]]>
+  </delete>
+  <delete id="deleteByPrimaryKey">
+  	delete from game_issue${issueSuffix}
+    where id = #{id} 
+  </delete>
+  <select id="selectByGameIdAndFullIssue" resultMap="BaseResultMap">
+    select 
+   <include refid="Base_Column_List" />
+    from game_issue${issueSuffix}
+    where game_id = #{gameId} and full_issue = #{fullIssue} 
+  </select>
+  
+  <select id="getBeDrawIssueByGameIdAndBeforeTime" resultMap="BaseResultMap">
+  select * from (
+   select 
+   <include refid="Base_Column_List" />
+    from game_issue${issueSuffix} a
+    where a.game_id = #{gameId} and a.end_time <![CDATA[<]]> #{now}  
+    and #{now} <![CDATA[>=]]> a.end_time + 0.2
+    and not exists (select 1 from game_result c where a.game_id = c.game_id 
+    and a.full_issue = c.issue and rownum=1)         
+	order by end_time ) where rownum<![CDATA[<=]]>100
+  </select>
+<select id="findListByGameIdAndAfterId" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from game_issue${issueSuffix}
+    where game_id = #{gameId} and  <![CDATA[ id >=#{id}]]> 
+    order by id asc
+  </select>
+
+  
+  
+    <select id="selectCountByGameIdAndTime"  resultType="int">
+    select count(*) from game_issue where game_id = #{ gameId } and <![CDATA[ start_time < #{now} and end_time > #{now} ]]> 
+  </select>
+  
+  
+  
+  <select id="findTowIssueBetween" resultMap="BaseResultMap"   >
+    select 
+    <include refid="Base_Column_List" />
+    
+    
+    from game_issue${issueSuffix} A 
+    
+    WHERE A.END_TIME <![CDATA[ > ]]> (SELECT B.END_TIME FROM GAME_ISSUE${issueSuffix}   B WHERE B.FULL_ISSUE = #{ startIssue }  AND B.GAME_ID = A.GAME_ID )
+	AND A.END_TIME <![CDATA[ <  ]]>  (SELECT C.END_TIME FROM GAME_ISSUE${issueSuffix}  C WHERE C.FULL_ISSUE = #{ endIssue } AND C.GAME_ID = A.GAME_ID )
+	AND A.GAME_ID = #{ gameId }
+    ORDER BY A.END_TIME DESC
+   
+  </select>
+  
+</mapper>

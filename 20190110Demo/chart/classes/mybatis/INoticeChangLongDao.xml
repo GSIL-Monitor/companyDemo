@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lgame.app.chart.dao.INoticeChangLongDao" >
+  <resultMap id="BaseResultMap" type="com.lgame.app.chart.domain.NoticeChangLong" >
+  	<id column="id" property="id" jdbcType="INTEGER" />
+    <result column="game_id" property="gameId" jdbcType="VARCHAR" />
+    <result column="chang_long_type" property="changLongType" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+ 
+  <sql id="Base_Column_List" >
+   game_id, chang_long_type, content
+  </sql>
+    <insert id="insert" parameterType="com.lgame.app.chart.domain.NoticeChangLong" useGeneratedKeys="false" keyProperty="id" flushCache="true">
+    	<selectKey resultType="int" order="BEFORE" keyProperty="id">select NOTICE_CHANG_LONG_SEQ.NEXTVAL FROM DUAL</selectKey>
+		    insert into notice_chang_long (id, game_id, chang_long_type, content, create_date)
+		    values (#{id}, #{gameId,jdbcType=VARCHAR}, #{changLongType,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <select id="getNoticeChangLong" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from notice_chang_long
+	where 1=1
+	and game_id = #{gameId}
+	and chang_long_type = #{changLongType}
+	and TRUNC(create_date) = TRUNC(#{createDate})
+  </select>
+  
+  
+</mapper>

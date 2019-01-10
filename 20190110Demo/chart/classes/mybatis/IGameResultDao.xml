@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lgame.app.chart.dao.IGameResultChartDao" >
+  <resultMap id="BaseResultMap" type="com.lgame.app.chart.domain.GameResult" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="game_id" property="gameId" jdbcType="VARCHAR" />
+    <result column="game_name" property="gameName" jdbcType="VARCHAR" />
+    <result column="game_type" property="gameType" jdbcType="CHAR" />
+    <result column="issue" property="issue" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="result_date" property="resultDate" jdbcType="TIMESTAMP" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="last_result_date" property="lastResultDate" jdbcType="TIMESTAMP" />
+    <result column="result_type" property="resultType" jdbcType="INTEGER" />
+  </resultMap>
+ 
+  <sql id="Base_Column_List" >
+    id, game_id, game_name, game_type, issue, create_date, result_date, result, result_type, status, last_result_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from game_result
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from game_result
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lgame.app.chart.domain.GameResult" useGeneratedKeys="false" keyProperty="id" flushCache="true">
+    <selectKey resultType="int" order="BEFORE" keyProperty="id">
+            select GAME_RESULT_ID_SEQ.NEXTVAL FROM DUAL
+                </selectKey>
+    insert into game_result (id,game_id, game_name, game_type, 
+      issue, create_date, result_date, 
+      result, result_type, status, last_result_date)
+    values (#{id}, #{gameId,jdbcType=VARCHAR}, #{gameName, jdbcType=VARCHAR}, #{gameType,jdbcType=CHAR}, 
+      #{issue,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{resultDate,jdbcType=TIMESTAMP}, 
+      #{result,jdbcType=VARCHAR}, #{resultType,jdbcType=INTEGER}, #{status, jdbcType=BIT}, #{lastResultDate, jdbcType=TIMESTAMP})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.lgame.app.chart.domain.GameResult" >
+    update game_result
+    set 
+      result_date = #{resultDate,jdbcType=TIMESTAMP},
+      result = #{result,jdbcType=VARCHAR},
+      result_type = #{resultType,jdbcType=INTEGER},
+      last_result_date = #{lastResultDate, jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateStatusByIssueAndGameId">
+  	update game_result set status=1 where issue=#{issue} and game_id=#{gameId} and status=0
+  </update>
+ 
+  <update id="canceStatusByIdAndGameId" >
+  	update game_result set is_cance_status=1 where id=#{id} and game_id=#{gameId}
+  </update>
+   <resultMap id="JoinResultMap" type="com.lgame.app.chart.dto.GameIssueResult" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="game_id" property="gameId" jdbcType="VARCHAR" />
+    <result column="issue_status" property="issueStatus" jdbcType="BIT" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="award_time" property="awardTime" jdbcType="TIMESTAMP" />
+    <result column="full_issue" property="fullIssue" jdbcType="VARCHAR" />
+    <result column="game_name" property="gameName" jdbcType="VARCHAR" />
+    <result column="game_type" property="gameType" jdbcType="CHAR" />
+    <result column="result_date" property="resultDate" jdbcType="TIMESTAMP" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="result_type" property="resultType" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="is_cance_status" property="isCanceStatus" jdbcType="BIT" />
+    
+  </resultMap>
+  <select id="findResultByGameIdAndIssueDate" resultMap="JoinResultMap">
+  	select a.game_id, a.status issue_status, a.issue, a.start_time, a.end_time, a.award_time, a.full_issue, 
+      b.game_name, b.game_type, b.result_date, b.result, b.result_type, b.status,b.is_cance_status,b.id
+      from game_issue${issueSuffix} a left join game_result b on(a.game_id=b.game_id and a.full_issue = b.issue) 
+  	  where a.game_id = #{gameId} 
+        <choose>
+        <when test="gameId == 'XGLHC' ">
+    		AND trunc(#{date}) BETWEEN a.start_time  AND a.issue_date
+    	</when>
+       <otherwise>
+        and a.issue_date = trunc(#{date})
+        <if test="isDate"> and a.start_time &lt;= #{now}</if>
+      </otherwise>
+  	   </choose>
+
+    order by a.start_time desc
+  </select>
+  <select id="findTop10IssueResult" resultMap="BaseResultMap">
+   <![CDATA[
+    select * from (
+  	select r.id, r.game_id, r.game_name, r.game_type, r.issue, r.create_date, r.result_date, r.result, r.result_type, r.status, r.last_result_date
+  	from game_result r
+  	join game_issue i on i.game_id = r.game_id and r.issue = i.full_issue
+  	where r.game_id =  #{gameId}
+  	order by  i.end_time  desc ) where rownum <=10]]>
+
+  	
+  </select>
+  
+  <select id="findTop10MMCResult" resultMap="BaseResultMap">
+	<![CDATA[ select * from (
+	select  game_id, game_name, game_type,award_result result ,period_no issue,create_date
+	from bet_gpcp_clearing_record where game_id = #{gameId} and account_name = #{accountName}  
+	group by game_id, game_name, game_type,award_result,period_no,create_date
+	order by create_date desc )
+	where rownum <=10]]>
+  </select>
+  <select id="findMMCResult" resultMap="JoinResultMap">
+  	select  game_id, game_name, game_type,award_result result ,period_no full_issue,create_date
+	from bet_gpcp_clearing_record where game_id = #{gameId} and account_name = #{accountName} 
+	<![CDATA[
+	and create_date >= #{startDate} and create_date <= #{endDate} 
+	group by game_id, game_name, game_type,award_result,period_no,create_date
+	order by create_date desc
+	]]>
+  </select>
+  <select id="findIssueResultByDate" resultMap="BaseResultMap">
+  	select id, game_id, game_name, game_type, issue, create_date, result_date, "RESULT", result_type, status, last_result_date
+  	from game_result 
+  	where game_id = #{gameId}
+  	and issue in (select full_issue from game_issue where game_id=#{gameId} and to_char(issue_date,'YYYY-MM-DD')=#{dateStr})
+	<if test="isToDate"> 
+		and rownum=50
+	</if>
+	order by length(issue)desc,issue desc
+  </select>
+  <select id="findTop10IssueResultIsNull" resultMap="JoinResultMap">
+  		<![CDATA[
+  	select * from (
+  	select a.game_id, a.status issue_status, a.issue, a.start_time, a.end_time, a.award_time, a.full_issue, 
+      b.game_name, b.game_type, b.result_date, b.result, b.result_type, b.status,b.id
+      from game_issue${issueSuffix} a left join game_result b on(a.game_id=b.game_id and a.full_issue = b.issue) 
+  	  where a.game_id = #{gameId} and a.issue_date = trunc(#{date})
+      and a.award_time <	 #{now}
+    order by a.start_time desc ) where rownum <= 10 ]]>
+  </select>
+  
+  <select id="findUnClearGameResult" resultMap="BaseResultMap">
+	select * from (
+			  		select <include refid="Base_Column_List"/> from game_result 
+	<![CDATA[
+			  		where game_id= #{gameId} and TRUNC(CAST(create_date AS DATE) - sysdate ) *24 < 8 and status = 0 
+			  		order by issue 
+				  ) subTable
+	where rownum <= 20
+	]]>
+  </select>
+  
+  <select id="getGameResultByGameIdAndIssue" resultMap="BaseResultMap">
+  	  	select <include refid="Base_Column_List"/> from game_result where game_id=#{gameId} and issue=#{issue}
+  </select>
+   <select id="findResultByDetail" resultMap="JoinResultMap">
+
+    select a.game_id, a.status issue_status, a.issue, a.start_time, a.end_time, a.award_time, a.full_issue, 
+      b.game_name, b.game_type, b.result_date, b.result, b.result_type, b.status,b.is_cance_status,b.id
+      from game_issue${issueSuffix} a left join game_result b on(a.game_id=b.game_id and a.full_issue = b.issue) 
+      where a.game_id = #{gameId} and a.issue_date = trunc(#{date})
+    <if test="isDate"> 
+        <![CDATA[
+    	and a.start_time <=(#{now})
+    	]]>
+    </if>
+    order by a.start_time desc
+
+  </select>
+  
+  <select id="findLastResultByGameIdAndDate" resultMap="BaseResultMap">
+  		select  r.id, r.game_id, r.game_name, r.game_type, r.issue, r.create_date, r.result_date, r.result, r.result_type, r.status, r.last_result_date
+	  	from game_result r
+	  	where r.game_id =  #{gameId}
+	  	and r.result_date <![CDATA[>=]]>  #{startDate}
+	  	and r.result_date <![CDATA[<=]]> #{endDate}
+		<!-- oracle use rownum limit return row number, there is no top keyword -->	  	
+	  	AND rownum = 1
+	  	order by  r.result_date  desc 
+	  	<!-- only can use in postgre
+	  	 		limit 1  -->
+  </select>
+  <select id="getNewestGameResultByGameId" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> 
+		FROM (
+			SELECT <include refid="Base_Column_List"/> 
+			FROM GAME_RESULT WHERE GAME_ID = #{gameId} ORDER BY issue DESC
+		)
+		WHERE 1=1 
+		AND rownum <![CDATA[<=]]>1
+  </select>
+    <select id="getGameResultByTG" resultMap="BaseResultMap">
+      select  <include refid="Base_Column_List"/> 
+    from game_result
+    where game_id =  #{gameId}
+    AND TRUNC(CREATE_DATE) <![CDATA[>]]> #{startDate}
+    AND TRUNC(CREATE_DATE) <![CDATA[<]]> #{endDate}
+    ORDER BY TO_NUMBER(ISSUE) 
+  </select>
+</mapper>

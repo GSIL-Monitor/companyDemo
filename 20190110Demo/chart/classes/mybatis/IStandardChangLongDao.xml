@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lgame.app.chart.dao.IStandardChangLongDao" >
+  <resultMap id="BaseResultMap" type="com.lgame.app.chart.domain.StandardChangLong" >
+    <result column="game_id" property="gameId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="confidence_interval" property="confidenceInterval" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+ 
+  <sql id="Base_Column_List" >
+   game_id, status, confidence_interval, content
+  </sql>
+  <select id="getStandardChangLong" resultMap="BaseResultMap">
+    select  <include refid="Base_Column_List" />
+    from STANDARD_CHANG_LONG
+	where game_id = #{gameId}
+	and status = 1
+  </select>
+  
+  
+</mapper>

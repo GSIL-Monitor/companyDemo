@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lgame.app.chart.dao.IGameChartTaskDao" >
+  <resultMap id="BaseResultMap" type="com.lgame.app.chart.domain.GameChartTask" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="game_id" property="gameId" jdbcType="VARCHAR" />
+    <result column="issue" property="issue" jdbcType="VARCHAR" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="retry_times" property="retryTimes" jdbcType="INTEGER" />
+ 	<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+ 	<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, game_id, issue,result, status, retry_times ,  create_date, update_date
+  </sql>
+  
+  
+   <insert id="insert" parameterType="com.lgame.app.chart.domain.GameChartTask" useGeneratedKeys="false" keyProperty="id" flushCache="true">
+    <selectKey resultType="int" order="BEFORE" keyProperty="id">
+            select GAME_CHART_task_id_seq.NEXTVAL FROM DUAL
+                </selectKey>
+    insert into game_chart_task (id,game_id, issue, result, create_date,result_date)
+    values (#{id}, #{gameId,jdbcType=VARCHAR},
+      #{issue,jdbcType=VARCHAR},  #{result,jdbcType=VARCHAR} ,#{createDate,jdbcType=TIMESTAMP},#{resultDate,jdbcType=TIMESTAMP})
+  </insert>
+  
+  
+  <select id="queryChartTaskByMap" resultMap="BaseResultMap" parameterType="java.util.HashMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from game_chart_task
+    where 1=1
+    
+      <if test="gameId != null" >
+          and game_id = #{gameId}
+      </if>
+      <if test="status != null" >
+          and status = #{status}
+      </if>
+  
+    <if test="issue != null" >
+          and issue = #{issue}
+      </if>
+      
+       <if test="orderBy != null" >
+          order by ${orderBy} 
+      </if>
+   
+  </select>
+  
+    <select id="queryChartTaskAndIssueByMap" resultMap="BaseResultMap" parameterType="java.util.HashMap"  >
+    select a.*
+  
+    FROM GAME_CHART_TASK a JOIN GAME_ISSUE${issueSuffix}   b ON a.GAME_ID = b.GAME_ID AND a.ISSUE = b.FULL_ISSUE
+    
+    where 1=1
+    
+      <if test="gameId != null" >
+          and a.game_id = #{gameId}
+      </if>
+      <if test="status != null" >
+          and a.status = #{status}
+      </if>
+  
+    <if test="issue != null" >
+          and a.issue = #{issue}
+      </if>
+      
+       
+          order by b.end_time
+     
+   
+  </select>
+  
+    
+  <update id="update" parameterType="com.lgame.app.chart.domain.GameChartTask" >
+    update game_chart_task
+    
+     <set>
+     
+     <if test="retryTimes != null" >
+         retry_times = retry_times + ${retryTimes} ,
+     </if>
+     
+     <if test="status != null" >
+         status =  #{status,jdbcType=INTEGER} ,
+     </if>
+      <if test="updateDate != null" >
+         update_date =  #{updateDate,jdbcType=TIMESTAMP} ,
+     </if>
+     
+    
+     
+    </set>
+    
+    <where>
+      id = #{id}
+    </where>
+
+  </update>
+  
+  
+</mapper>
