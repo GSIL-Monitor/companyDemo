@@ -188,6 +188,14 @@ xmlns:util="http://www.springframework.org/schema/util"
 				<ref bean="clearTC3FFCTrigger" />				
 				<ref bean="getTC5FFCNumberTrigger" />
 				<ref bean="clearTC5FFCTrigger" />	
+	  			<ref bean="getPH1PK10NumberTrigger" />
+				<ref bean="clearPH1PK10Trigger" />				
+				<ref bean="getPH15PK10NumberTrigger" />
+				<ref bean="clearPH15PK10Trigger" />				
+				<ref bean="getPH3PK10NumberTrigger" />
+				<ref bean="clearPH3PK10Trigger" />				
+				<ref bean="getPH5PK10NumberTrigger" />
+				<ref bean="clearPH5PK10Trigger" />			
 				</list>
 		</property>
 		

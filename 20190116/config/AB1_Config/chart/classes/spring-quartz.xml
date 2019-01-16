@@ -94,6 +94,10 @@ xmlns:util="http://www.springframework.org/schema/util"
  				<ref bean="chartBJPK10TaskTrigger"/>
 				<ref bean="chartCF1PK10TaskTrigger"/>
  				<ref bean="chartXY1PK10TaskTrigger"/>
+ 				<ref bean="chartPH1PK10TaskTrigger"/>	
+ 				<ref bean="chartPH15PK10TaskTrigger"/>	
+ 				<ref bean="chartPH3PK10TaskTrigger"/>	
+ 				<ref bean="chartPH5PK10TaskTrigger"/>
  				<!-- 传统重庆时时彩 -->
 				<ref bean="chartCTCQSSCTaskTrigger"/>
  				<!-- 传统PK10 -->

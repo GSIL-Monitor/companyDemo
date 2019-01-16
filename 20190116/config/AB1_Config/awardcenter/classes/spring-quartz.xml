@@ -69,6 +69,10 @@ xmlns:util="http://www.springframework.org/schema/util"
 
 				<ref bean="getKillerNumberOG15PK10Trigger" />
 				<ref bean="getKillerNumberCTOG15PK10Trigger" />
+				<ref bean="getKillerNumberPH1PK10Trigger" />
+				<ref bean="getKillerNumberPH15PK10Trigger" />				
+				<ref bean="getKillerNumberPH3PK10Trigger" />
+				<ref bean="getKillerNumberPH5PK10Trigger" />
 
 				<ref bean="openAwardOG1LK28Trigger" />
 				<ref bean="openAwardCF1LK28Trigger" />
@@ -76,6 +80,7 @@ xmlns:util="http://www.springframework.org/schema/util"
 				<ref bean="openAwardNNTrigger" />
 				<ref bean="openAwardPH1FFCTrigger" />
 				<ref bean="openAwardTC1FFCTrigger" />
+				<ref bean="openAwardPH1PK10Trigger" />
 				</list>
 		</property>
 		<!-- quartz配置文件路徑, 指向cluster配置 -->
@@ -1274,4 +1279,103 @@ xmlns:util="http://www.springframework.org/schema/util"
 		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
 		<property name="durability" value="true" />		
 	</bean>	
+	<!--鳳凰1分賽車開獎任务 -->
+	<bean id="openAwardPH1PK10Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="openAwardPH1PK10" />
+		<property name="cronExpression" value="* * * * * ?" />
+	</bean>
+	<bean id="openAwardPH1PK10" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.awardcenter.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="issueGetAwardPH1PK10" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+			
+				<!--鳳凰賽車一分彩杀率拿奖号任务 -->
+	<bean id="getKillerNumberPH1PK10Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getKillerNumberPH1PK10" />
+		<property name="cronExpression" value="0 0/1 * * * ?" />
+	</bean>
+	<bean id="getKillerNumberPH1PK10" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+			<!-- 上面的任务代理类 -->
+			<value>com.lgame.app.awardcenter.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="killerNumberPH1PK10" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false -->
+		<property name="durability" value="true" />
+	</bean>
+	
+	<!--鳳凰賽車1.5分赛车杀率拿奖号任务 -->
+	<bean id="getKillerNumberPH15PK10Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getKillerNumberPH15PK10" />
+		<property name="cronExpression" value="20 0/1 * * * ?" />
+	</bean>
+	<bean id="getKillerNumberPH15PK10" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+			<!-- 上面的任务代理类 -->
+			<value>com.lgame.app.awardcenter.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="killerNumberPH15PK10" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false -->
+		<property name="durability" value="true" />
+	</bean>
+	
+	<!--鳳凰賽車三分彩杀率拿奖号任务 -->
+	<bean id="getKillerNumberPH3PK10Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getKillerNumberPH3PK10" />
+		<property name="cronExpression" value="0 0/3 * * * ?" />
+	</bean>
+	<bean id="getKillerNumberPH3PK10" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+			<!-- 上面的任务代理类 -->
+			<value>com.lgame.app.awardcenter.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="killerNumberPH3PK10" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false -->
+		<property name="durability" value="true" />
+	</bean>
+	
+	<!--鳳凰賽車五分彩杀率拿奖号任务 -->
+	<bean id="getKillerNumberPH5PK10Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="getKillerNumberPH5PK10" />
+		<property name="cronExpression" value="0 0/5 * * * ?" />
+	</bean>
+	<bean id="getKillerNumberPH5PK10" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+			<!-- 上面的任务代理类 -->
+			<value>com.lgame.app.awardcenter.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="killerNumberPH5PK10" />
+				<entry key="targetMethod" value="excuteTask" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false -->
+		<property name="durability" value="true" />
+	</bean>
 </beans>

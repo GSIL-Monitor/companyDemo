@@ -174,7 +174,31 @@ xmlns:util="http://www.springframework.org/schema/util"
 	            <ref bean="clearPH3K3Trigger"/>
 	            <ref bean="getPH5K3NumberTrigger"/>   
 	            <ref bean="clearPH5K3Trigger"/>
-			</list>
+				<ref bean="getPH1FFCNumberTrigger" />
+				<ref bean="clearPH1FFCTrigger" />				
+				<ref bean="getPH15FFCNumberTrigger" />
+				<ref bean="clearPH15FFCTrigger" />				
+				<ref bean="getPH3FFCNumberTrigger" />
+				<ref bean="clearPH3FFCTrigger" />				
+				<ref bean="getPH5FFCNumberTrigger" />
+				<ref bean="clearPH5FFCTrigger" />				
+				<ref bean="getTC1FFCNumberTrigger" />
+				<ref bean="clearTC1FFCTrigger" />				
+				<ref bean="getTC15FFCNumberTrigger" />
+				<ref bean="clearTC15FFCTrigger" />				
+				<ref bean="getTC3FFCNumberTrigger" />
+				<ref bean="clearTC3FFCTrigger" />				
+				<ref bean="getTC5FFCNumberTrigger" />
+				<ref bean="clearTC5FFCTrigger" />	
+	  			<ref bean="getPH1PK10NumberTrigger" />
+				<ref bean="clearPH1PK10Trigger" />				
+				<ref bean="getPH15PK10NumberTrigger" />
+				<ref bean="clearPH15PK10Trigger" />				
+				<ref bean="getPH3PK10NumberTrigger" />
+				<ref bean="clearPH3PK10Trigger" />				
+				<ref bean="getPH5PK10NumberTrigger" />
+				<ref bean="clearPH5PK10Trigger" />			
+				</list>
 		</property>
 		
 		<!-- quartz配置文件路徑, 指向cluster配置 -->

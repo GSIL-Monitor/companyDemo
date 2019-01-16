@@ -126,7 +126,11 @@ xmlns:util="http://www.springframework.org/schema/util"
 				<ref bean="profitLossTC1FFCTrigger"/>
 	  			<ref bean="profitLossTC3FFCTrigger"/>
 	  			<ref bean="profitLossTC5FFCTrigger"/>
-				
+				<ref bean="profitLossPH15PK10Trigger"/>
+				<ref bean="profitLossPH15PK102Trigger"/>									
+				<ref bean="profitLossPH1PK10Trigger"/>
+	  			<ref bean="profitLossPH3PK10Trigger"/>
+	  			<ref bean="profitLossPH5PK10Trigger"/>				
 			</list>
 		</property>
 		

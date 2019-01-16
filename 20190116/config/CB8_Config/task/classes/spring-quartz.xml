@@ -186,6 +186,14 @@ xmlns:util="http://www.springframework.org/schema/util"
 				<ref bean="clearTC3FFCTrigger" />				
 				<ref bean="getTC5FFCNumberTrigger" />
 				<ref bean="clearTC5FFCTrigger" />	
+	  			<ref bean="getPH1PK10NumberTrigger" />
+				<ref bean="clearPH1PK10Trigger" />				
+				<ref bean="getPH15PK10NumberTrigger" />
+				<ref bean="clearPH15PK10Trigger" />				
+				<ref bean="getPH3PK10NumberTrigger" />
+				<ref bean="clearPH3PK10Trigger" />				
+				<ref bean="getPH5PK10NumberTrigger" />
+				<ref bean="clearPH5PK10Trigger" />			
 				</list>
 		</property>
 		
@@ -394,7 +402,7 @@ xmlns:util="http://www.springframework.org/schema/util"
 		</property>
 		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
 		<property name="durability" value="true" />		
-	</bean>
+	</bean>	
 		<!-- 本日盈利榜資訊 -->
 	<bean id="betProfitListTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="betProfitListDetail" />
