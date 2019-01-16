@@ -1,0 +1,12 @@
+#TW ESB
+esb.core.url=http://esbonline.abproduct2.com/ESB/main/core
+esb.token.url=http://esbonline.abproduct2.com/ESB/interface/token
+
+esb.pay.domain.split.key=@@@
+esb.db.name=TW_DB01
+
+esb.remitroute=remitment
+#remit
+esb.remitappid=ff80808164f4072c01650e6d571000f9
+#platform
+esb.remitcallbackappid=8a958bac64a2b5550164a613fdab0037
