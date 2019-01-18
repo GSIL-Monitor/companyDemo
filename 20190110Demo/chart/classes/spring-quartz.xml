@@ -45,15 +45,7 @@ xmlns:util="http://www.springframework.org/schema/util"
 				<ref bean="chartTWFFCTaskTrigger"/>	
 				<ref bean="chartSLFKFFCTaskTrigger"/>	
 <!-- 				<ref bean="chartAUFFCTaskTrigger"/>	 -->
-				<ref bean="chartKORFFCTaskTrigger"/>
- 				<ref bean="chartPH1FFCTaskTrigger"/>	
- 				<ref bean="chartPH15FFCTaskTrigger"/>	
- 				<ref bean="chartPH3FFCTaskTrigger"/>	
- 				<ref bean="chartPH5FFCTaskTrigger"/>	
- 				<ref bean="chartTC1FFCTaskTrigger"/>	
- 				<ref bean="chartTC15FFCTaskTrigger"/>	
- 				<ref bean="chartTC3FFCTaskTrigger"/>	
- 				<ref bean="chartTC5FFCTaskTrigger"/>						
+				<ref bean="chartKORFFCTaskTrigger"/>	
 				<!--时时彩分分彩chartTask		end-->
 				<!--XX5chartTask		start-->
 				<ref bean="chartSH11X5TaskTrigger"/>
