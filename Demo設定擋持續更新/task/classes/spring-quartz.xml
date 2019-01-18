@@ -1,0 +1,715 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+
+xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	<description>Quartz的本地Cron式执行任务配置</description>
+	
+	<!--分散式开奖配置-->
+	<import resource="/df_lottery/df_lottery_number_Distributed_task.xml"/>
+	<!--自主彩种开奖配置-->
+	<import resource="/df_lottery/df_lottery_number_task.xml"/>
+	<import resource="/df_lottery/df_lottery_genIssue_task.xml"/>
+	<import resource="/report/report_task.xml"/>
+	<import resource="/profitloss/profitloss_report_task.xml"/>	
+	<!--试玩账户期限检查-->
+	<import resource="/testAccount/test_account_task.xml"/>
+	<!-- footbar服务体验 -->
+	<import resource="/footbar/foot_bar_task.xml"/>
+	
+	<!-- Quartz本地Schduler -->
+	<bean id="clusterQuartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- Triggers集成 -->
+		<property name="triggers">
+			<list>
+				<ref bean="profitLossAccountNoticeTaskTrigger" />
+				<ref bean="noClearTrigger" />
+				<ref bean="runPrivilegeTrigger" />
+				<ref bean="getJLFFCNumberTrigger"/>
+				<ref bean="getTSFFCNumberTrigger"/>
+ 				<ref bean="clearJLFFCTrigger"/>
+				<ref bean="clearTSFFCTrigger"/>	
+				<ref bean="getTFFFCNumberTrigger"/>
+				<ref bean="clearTFFFCTrigger"/>	
+				<ref bean="AUFFCGenIssueTrigger"/>	
+				<ref bean="AUKL8GenIssueTrigger"/>	
+				<ref bean="getJLPK10NumberTrigger"/>
+				<ref bean="getTSPK10NumberTrigger"/>
+				<ref bean="clearJLPK10Trigger"/>
+				<ref bean="clearTSPK10Trigger"/>	
+				<ref bean="getTFPK10NumberTrigger"/>
+				<ref bean="clearTFPK10Trigger"/>
+				<ref bean="CAFFCGenIssueTrigger"/>	
+				<ref bean="CAKL8GenIssueTrigger"/>	
+				<ref bean="getOG1K3NumberTrigger"/>		
+				<ref bean="clearOG1K3Trigger"/>	
+				<ref bean="getCF1K3NumberTrigger"/>		
+				<ref bean="clearCF1K3Trigger"/>					
+				<ref bean="footBarTrigger"/>	
+				<ref bean="testAccountCheckTrigger"/>
+				<ref bean="autoResetPauseStatusTrigger"/>
+				<ref bean="updateRebateMoneyTrigger"/> 	
+				<ref bean="LhcNoclearingRecordMoveToRediusTrigger"/>
+				<ref bean="getOG1LHCNumberTrigger"/>	
+				<ref bean="clearOG1LHCTrigger"/>
+				<ref bean="getOG3LHCNumberTrigger"/>	
+				<ref bean="clearOG3LHCTrigger"/>
+				<ref bean="getOG5LHCNumberTrigger"/>	
+				<ref bean="clearOG5LHCTrigger"/>
+				<ref bean="getCF1PK10NumberTrigger"/>
+				<ref bean="clearCF1PK10Trigger"/>
+				<ref bean="getCF1FFCNumberTrigger"/>
+				<ref bean="clearCF1FFCTrigger"/>
+				<ref bean="getXY1PK10NumberTrigger"/>
+				<ref bean="clearXY1PK10Trigger"/>
+				<ref bean="getXY1FFCNumberTrigger"/>
+				<ref bean="clearXY1FFCTrigger"/>
+				<ref bean="getXY1K3NumberTrigger"/>
+				<ref bean="clearXY1K3Trigger"/>
+
+				<ref bean="getOG3K3NumberTrigger"/>		
+				<ref bean="clearOG3K3Trigger"/>	
+				<ref bean="getOG5K3NumberTrigger"/>		
+				<ref bean="clearOG5K3Trigger"/>
+				<ref bean="getCF3K3NumberTrigger"/>		
+				<ref bean="clearCF3K3Trigger"/>	
+				<ref bean="getCF5K3NumberTrigger"/>		
+				<ref bean="clearCF5K3Trigger"/>
+				<ref bean="getXY3K3NumberTrigger"/>		
+				<ref bean="clearXY3K3Trigger"/>
+				<ref bean="getXY5K3NumberTrigger"/>		
+				<ref bean="clearXY5K3Trigger"/>				
+				<!-- CTCP -->
+				<ref bean="getCTOG1SSCNumberTrigger"/>
+				<ref bean="clearCTOG1SSCTrigger"/>
+				<ref bean="getCTOG1BSCNumberTrigger"/>
+				<ref bean="clearCTOG1BSCTrigger"/>
+				<ref bean="getCTOG1K3NumberTrigger"/>
+				<ref bean="clearCTOG1K3Trigger"/>
+				
+				<ref bean="getOG1LK28NumberTrigger"/>
+				<ref bean="clearOG1LK28Trigger"/>
+				<ref bean="getCF1LK28NumberTrigger"/>
+				<ref bean="clearCF1LK28Trigger"/>
+ 				<ref bean="getXY1LK28NumberTrigger"/>
+				<ref bean="clearXY1LK28Trigger"/>	
+				
+				<ref bean="getCF111X5NumberTrigger"/>
+				<ref bean="clearCF111X5Trigger"/>
+				<ref bean="getOG111X5NumberTrigger"/>
+				<ref bean="clearOG111X5Trigger"/>
+				<ref bean="getOG10LHCNumberTrigger"/>
+				<ref bean="clearOG10LHCTrigger"/>
+				<ref bean="firstDepositReporTrigger"/>	
+				<ref bean="appSlowReqTrigger"/>	
+				<ref bean="AutoGroupTrigger"/>
+				<ref bean="allThisMonthBetInfoBySiteIdTrigger"/>
+			    <ref bean="allLastMonthBetInfoBySiteIdTrigger"/>
+			    <ref bean="allSiteTotlAuthMoneyBySiteIdTrigger"/>
+				<ref bean="onlineMemberCountTrigger"/>
+				<ref bean="reportTrigger"/>
+				<ref bean="profitReportTrigger"/>	
+				<ref bean="totalOverviewTrigger"/>
+				<ref bean="profitLossAccountTrigger"/>	
+				<ref bean="profitLossEfficientTrigger"/> 
+				<ref bean="profitLossRedisClearTrigger"/>
+				<ref bean="profitLossOG1K3Trigger"/>
+				<ref bean="profitLossCF1K3Trigger"/>
+				<ref bean="profitLossJLFFCTrigger"/>
+				<ref bean="profitLossJLPK10Trigger"/>
+				<ref bean="profitLossOG1LHCTrigger"/>
+				<ref bean="profitLossCTOG1SSCTrigger"/>
+				<ref bean="profitLossCTOG1BSCTrigger"/>
+				<ref bean="profitLossK3MMCTrigger"/>
+				<ref bean="profitLossOGMMCTrigger"/>
+				<ref bean="profitLossLHCMMCTrigger"/>
+				<ref bean="profitLossTSFFCTrigger"/>
+				<ref bean="profitLossTFFFCTrigger"/>
+				<ref bean="profitLossTSPK10Trigger"/>
+				<ref bean="profitLossTFPK10Trigger"/>
+				<ref bean="profitLossCF111X5Trigger"/>
+				<ref bean="profitLossOG111X5Trigger"/>
+				<ref bean="profitLossCF1PK10Trigger"/>
+				<ref bean="profitLossCF1FFCTrigger"/>
+				<ref bean="profitLossXY1PK10Trigger"/>
+				<ref bean="profitLossXY1FFCTrigger"/>
+				<ref bean="profitLossXY1K3Trigger"/>
+				
+				<ref bean="profitLossCF3K3Trigger"/>
+				<ref bean="profitLossOG3K3Trigger"/>
+				<ref bean="profitLossXY3K3Trigger"/>
+				<ref bean="profitLossOG5K3Trigger"/>
+				<ref bean="profitLossCF5K3Trigger"/>
+				<ref bean="profitLossXY5K3Trigger"/>
+				
+				<ref bean="resetStopMoneyTrigger"/>
+
+				
+				<ref bean="getCTOG3K3NumberTrigger"/>
+				<ref bean="clearCTOG3K3Trigger"/>
+  				<ref bean="getCTOG5K3NumberTrigger"/>
+				<ref bean="clearCTOG5K3Trigger"/>
+				<ref bean="getCTCF3K3NumberTrigger"/>
+ 				<ref bean="clearCTCF3K3Trigger"/>
+   				<ref bean="getCTCF5K3NumberTrigger"/>
+ 				<ref bean="clearCTCF5K3Trigger"/>
+   				<ref bean="getCTXY3K3NumberTrigger"/>
+ 				<ref bean="clearCTXY3K3Trigger"/>
+   				<ref bean="getCTXY5K3NumberTrigger"/>
+ 				<ref bean="clearCTXY5K3Trigger"/>
+ 				<ref bean="getCTXY1K3NumberTrigger"/>
+				<ref bean="clearCTXY1K3Trigger"/>
+				<ref bean="getCTCF1K3NumberTrigger"/>
+				<ref bean="clearCTCF1K3Trigger"/>
+
+				<ref bean="profitLossCTOG3K3Trigger"/>
+  				<ref bean="profitLossCTOG5K3Trigger"/> 
+   				<ref bean="profitLossCTXY3K3Trigger"/>
+   				<ref bean="profitLossCTXY5K3Trigger"/>   				
+   				<ref bean="profitLossCTCF3K3Trigger"/>
+   				<ref bean="profitLossCTCF5K3Trigger"/>
+   				<ref bean="profitLossCTCF1K3Trigger"/>
+   				<ref bean="profitLossCTXY1K3Trigger"/>
+
+				<!-- 自動結算 -->
+				<ref bean="reOpenAwardForNoClearRecordTrigger"/>
+				<ref bean="payDepositInfoTrigger"/>
+				
+				<ref bean="getCTOG3BSCNumberTrigger"/>
+				<ref bean="clearCTOG3BSCTrigger"/>
+				<ref bean="getCTOG5BSCNumberTrigger"/>
+				<ref bean="clearCTOG5BSCTrigger"/>
+				<ref bean="getCTXY1BSCNumberTrigger"/>
+				<ref bean="clearCTXY1BSCTrigger"/>
+				<ref bean="getCTXY3BSCNumberTrigger"/>
+				<ref bean="clearCTXY3BSCTrigger"/>
+				<ref bean="getCTXY5BSCNumberTrigger"/>
+				<ref bean="clearCTXY5BSCTrigger"/>
+				<ref bean="getCTCF1BSCNumberTrigger"/>
+				<ref bean="clearCTCF1BSCTrigger"/>
+				<ref bean="getCTCF3BSCNumberTrigger"/>
+				<ref bean="clearCTCF3BSCTrigger"/>
+				<ref bean="getCTCF5BSCNumberTrigger"/>
+				<ref bean="clearCTCF5BSCTrigger"/>
+				<ref bean="getCTXY1SSCNumberTrigger"/>
+				<ref bean="getCTCF1SSCNumberTrigger"/>
+				<ref bean="clearCTXY1SSCTrigger"/>
+				<ref bean="clearCTCF1SSCTrigger"/>
+				
+				<ref bean="profitLossCTOG3BSCTrigger"/>
+				<ref bean="profitLossCTOG5BSCTrigger"/>
+				<ref bean="profitLossCTXY3BSCTrigger"/>
+				<ref bean="profitLossCTXY5BSCTrigger"/>
+				<ref bean="profitLossCTCF3BSCTrigger"/>
+				<ref bean="profitLossCTCF5BSCTrigger"/>
+				<ref bean="profitLossCTXY1SSCTrigger"/>
+				<ref bean="profitLossCTCF1SSCTrigger"/>	
+				
+				<ref bean="profitLossOG5LHCTrigger"/>
+				<ref bean="profitLossOG10LHCTrigger"/>
+				<ref bean="profitLossXY5LHCTrigger"/>
+				<ref bean="profitLossXY10LHCTrigger"/>
+				<ref bean="profitLossCF5LHCTrigger"/>
+				<ref bean="profitLossCF10LHCTrigger" />					
+				<ref bean="profitLossBSCMMCTrigger"/>
+
+				<ref bean="profitLossEfficientForOneAndHalfTrigger"/>			    					
+				<ref bean="profitLossOG15FFCTrigger"/>
+				<ref bean="profitLossOG15FFC2Trigger"/>					
+				<ref bean="profitLossCTOG15FFCTrigger"/>
+				<ref bean="profitLossCTOG15FFC2Trigger"/>					
+				<ref bean="profitLossOG15PK10Trigger"/>
+				<ref bean="profitLossOG15PK102Trigger"/>
+				<ref bean="profitLossCTOG15PK10Trigger"/>
+				<ref bean="profitLossCTOG15PK102Trigger"/>
+
+				<ref bean="profitLossOG1LK28Trigger"/>
+				<ref bean="profitLossCF1LK28Trigger"/>
+				<ref bean="profitLossXY1LK28Trigger"/>
+				<!-- 牛牛 -->
+				<ref bean="betProfitListTaskTrigger"/>
+				<ref bean="getOGNNNumberTrigger"/>
+				<ref bean="clearOGNNTrigger"/>
+
+				<ref bean="profitLossOGNNTrigger"/>
+				<ref bean="profitLossEfficientForNNTrigger"/>
+	            <ref bean="getPH1K3NumberTrigger"/>   
+	            <ref bean="clearPH1K3Trigger"/>
+	            <ref bean="getPH3K3NumberTrigger"/>   
+	            <ref bean="clearPH3K3Trigger"/>
+	            <ref bean="getPH5K3NumberTrigger"/>   
+	            <ref bean="clearPH5K3Trigger"/>
+
+	            <ref bean="profitLossPH1K3Trigger"/>
+	            <ref bean="profitLossPH3K3Trigger"/>  
+	            <ref bean="profitLossPH5K3Trigger"/>
+			</list>
+		</property>
+		
+		<!-- quartz配置文件路徑, 指向cluster配置 -->
+ 		<property name="configLocation" value="classpath:quartz.properties" />		
+		<!-- 保存Job數據到數據庫所需的數據源 -->
+        <property name="dataSource" ref="dataSource" />     
+        <!-- 修改job時，更新到數據庫 -->
+        <property name="overwriteExistingJobs" value="true" />	
+		<!-- 启动时延期2秒开始任务 -->
+<!-- 		<property name="startupDelay" value="2" /> -->
+	</bean>
+
+	<!-- 支付设定自动恢复 -->
+	<bean id="autoResetPauseStatusTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="autoResetPauseStatusDetail" />
+		<!-- 每天两0点运行一次 -->
+		<property name="cronExpression" value="0 0 0 * * ?" />
+	</bean>
+	<bean id="autoResetPauseStatusDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="totalScanner" />
+				<entry key="targetMethod" value="runResetPauseStatusBusiness" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 支付设定自动恢复  END -->
+	
+	<!-- 未结算汇总 -->
+	<bean id="noClearTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="noClearTimerJobDetail" />
+		<!-- 每次执行间隔半分钟 -->
+		<property name="repeatInterval" value="30000" />
+	</bean>
+	<bean id="noClearTimerJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<!--<property name="name" value="noClear"/>
+		     		     		<property name="targetObject" ref="totalScanner" />
+		<property name="targetMethod" value="totalNoClearRecord" />  -->
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="name" value="noClear" />
+				<entry key="targetObject" value="totalScanner" />
+				<entry key="targetMethod" value="totalNoClearRecord" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 未结算汇总 END -->
+	
+	<!-- 优惠活动 -->
+	<bean id="runPrivilegeTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="runPrivilegeTimerJobDetail" />
+		<!-- 每次执行间隔1分钟 -->
+		<property name="repeatInterval" value="60000" />
+	</bean>
+	<bean id="runPrivilegeTimerJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="totalScanner" />
+				<entry key="targetMethod" value="runPrivilege" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 优惠活动 END -->
+	
+	<!-- 整期有獎號但未結算重新開獎-->
+	<bean id="reOpenAwardForGameResultTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="reOpenAwardForGameResultDetail" />
+		<property name="cronExpression" value="0/30 * * * * ?" />
+	</bean>
+	<bean id="reOpenAwardForGameResultDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="reOpenAwardTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 已結算但有未開獎註單重新開獎-->
+	<bean id="reOpenAwardForNoClearRecordTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="reOpenAwardForNoClearRecordDetail" />
+		<property name="cronExpression" value="0/30 * * * * ?" />
+	</bean>
+	<bean id="reOpenAwardForNoClearRecordDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="reOpenAwardTask" />
+				<entry key="targetMethod" value="excuteNoOpenRecord" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+	<!-- 結算後注單給上級返點金額-->
+	<bean id="updateRebateMoneyTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="updateRebateMoneyDetail" />
+		<property name="cronExpression" value="0 0/3 * * * ?" />
+	</bean>
+	<bean id="updateRebateMoneyDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="updateRebateMoneyTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	
+<!-- 六合彩未結算資料放至Redius -->
+	<bean id="LhcNoclearingRecordMoveToRediusTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="LhcNoclearingRecordMoveToRedius" />
+		<property name="cronExpression" value="0 0/1 * * * ?" />
+	</bean>
+	<bean id="LhcNoclearingRecordMoveToRedius" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="LhcNoclearingRecordTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	<!-- 报表汇总 -->
+	<bean id="reportTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="reportDetail" />
+		<!-- 每天五点运行一次 -->
+		<property name="cronExpression" value="0 0 5 * * ?" />
+	</bean>
+	<!-- 损益报表汇总 -->
+	<bean id="profitReportTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="profitReportDetail" />
+		<!-- 每天3点运行一次 -->
+		<property name="cronExpression" value="0 0 3 * * ?" />
+	</bean>
+	
+	<bean id="reportDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="totalScanner" />
+				<entry key="targetMethod" value="totalReport" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<bean id="profitReportDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="totalScanner" />
+				<entry key="targetMethod" value="winnerPeriod" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	<!-- 2017/03/30 wei new -->
+	<!-- 报表汇总 -->
+	<bean id="reportHourTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="reportHourDetail" />
+		<!-- 每天两点运行一次 -->
+		<property name="cronExpression" value="0 0/20 * * * ?" />
+	</bean>
+	<bean id="reportHourDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="totalScanner" />
+				<entry key="targetMethod" value="hourTotalReport" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 报表汇总 END -->
+	
+	<!-- 即时注单缓存 -->
+	<bean id="totalOverviewTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="totalOverviewTimerJobDetail" />
+		<!-- 每次执行间隔1分钟 -->
+		<property name="repeatInterval" value="15000" />
+	</bean>
+	<bean id="totalOverviewTimerJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="totalScanner" />
+				<entry key="targetMethod" value="totalOverview" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 即时注单缓存 END -->
+	
+	<!-- 代理报表每日汇总 -->
+	<bean id="agentReportTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="agnetReportDetail" />
+		<!-- 每天五点运行一次 -->
+		<property name="cronExpression" value="0 30 0 * * ?" />
+	</bean>
+	<bean id="agnetReportDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="agentReportTask" />
+				<entry key="targetMethod" value="agentReport" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 代理报表每日汇总END -->
+	
+	<!-- 代理报表每時汇总 -->
+	<bean id="agentReportHourTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="agnetReportHourDetail" />
+		<property name="cronExpression" value="0 0/5 * * * ?" />
+	</bean>
+	<bean id="agnetReportHourDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="agentReportTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 代理报表每時汇总END -->
+	
+	<!-- 报表异常时重产-->
+	<bean id="reportFailLogTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="reportFailLogDetail" />
+		<property name="cronExpression" value="0 0/5 * * * ?" />
+	</bean>
+	<bean id="reportFailLogDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="reportFailLogTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 报表异常时重产END -->	
+	
+	
+	<!-- 整理 APP_SLOWREQ_KEY -->
+	<bean id="appSlowReqTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="appSlowReqDetail" />
+		<property name="cronExpression" value="0/30 * * * * ?" />
+	</bean>
+	<bean id="appSlowReqDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="appSlowReqTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />	
+	</bean>
+	<!-- 自動用戶分組-->
+	<bean id="AutoGroupTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="AutoGroup" />
+		<property name="cronExpression" value="0 */5 * * * ?" />
+	</bean>
+	<bean id="AutoGroup" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="autoGroupTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+
+	<!-- 本月盈利等綜合報表所需資料-->
+	<bean id="allThisMonthBetInfoBySiteIdTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="allThisMonthBetInfoBySiteId" />
+		<property name="cronExpression" value="0 0/5 * * * ?" />
+	</bean>
+	<bean id="allThisMonthBetInfoBySiteId" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="MonthBetInfoTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	<bean id="allLastMonthBetInfoBySiteIdTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="allLastMonthBetInfoBySiteId" />
+		<property name="cronExpression" value="0 0/5 * * * ?" />
+	</bean>
+	<bean id="allLastMonthBetInfoBySiteId" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="MonthBetInfoTask" />
+				<entry key="targetMethod" value="lastMonth" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	<bean id="allSiteTotlAuthMoneyBySiteIdTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="allSiteTotlAuthMoneyBySiteId" />
+		<property name="cronExpression" value="0 0/5 * * * ?" />
+	</bean>
+	<bean id="allSiteTotlAuthMoneyBySiteId" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="MemberTotalMoneyTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	
+	<!-- 排程每日更新自動出款停用金,使用次數 -->
+	<bean id="resetStopMoneyTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="resetStopMoneyDetail" />
+		<property name="cronExpression" value="0 0 0 * * ?" />
+	</bean>
+	<bean id="resetStopMoneyDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="resetStopMoneyTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>
+	<!-- 第三方充值使用次數，總金額累積 -->
+	<bean id="payDepositInfoTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="payDepositInfoDetail" />
+		<property name="cronExpression" value="0 0/1 * * * ?" />
+	</bean>
+	<bean id="payDepositInfoDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="payDepositInfoTask" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>	
+	
+	<!-- 本日盈利榜資訊 -->
+	<bean id="betProfitListTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="betProfitListDetail" />
+		<property name="cronExpression" value="0 0/5 * * * ?" />
+	</bean>
+	<bean id="betProfitListDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+		  <!-- 上面的任务代理类 -->
+			<value>com.lgame.app.task.config.MethodInvokingJobDetailFactoryBean</value>
+		</property>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="targetObject" value="betProfitListTaskTrigger" />
+				<entry key="targetMethod" value="excute" />
+			</map>
+		</property>
+		<!-- durability 表示任務完成之後是否依然保留到數據庫，默認false   -->
+		<property name="durability" value="true" />		
+	</bean>	
+</beans>

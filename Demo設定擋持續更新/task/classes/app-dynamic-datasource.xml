@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd" default-lazy-init="true">
+	<!--
+	     		Update:
+		
+		before: 
+			动态选择数据库 一个Http有多个数据库操作 都会分布到多个数据源中
+		after:
+			使用标准事物 锁定数据源 防止跨数据源 导致事物失效
+			Service 嵌套调用的情况下 使用第一个 Service 上标注的数据源
+			也就是一次Http请求中所有的数据库操作 都在同一个数据源中
+			并发多个Http请求 可分配到不同的数据源中
+			
+			↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+			防止多个写数据源 出现异常
+	 -->
+	
+	<!-- start以下配置各个数据源的特性 -->
+	<bean parent="parentDataSource" id="writeDataSource"> 
+	    <property name="url" value="${oracle.jdbc.write.url}" />	
+	</bean> 
+	<bean parent="parentDataSource" id="readDataSource1"> 
+    	<property name="url" value="${oracle.jdbc.read.url}" />
+	</bean>
+	<bean parent="parentDataSource" id="readDataSource2"> 
+    	<property name="url" value="${oracle.jdbc.read.url}" />
+	</bean>
+	<bean parent="parentDataSource" id="reportDataSource"> 
+    	<property name="url" value="${oracle.jdbc.report.url}" />
+		<property name="username" value="${oracle.jdbc.report.username}" />
+		<property name="password" value="${oracle.jdbc.report.password}" />
+	</bean>
+	<bean parent="parentDataSource" id="authflowDataSource"> 
+    	<property name="url" value="${oracle.jdbc.authflow.url}" />
+ 		<property name="username" value="${oracle.jdbc.authflow.username}" />
+		<property name="password" value="${oracle.jdbc.authflow.password}" />
+	</bean>
+	<bean parent="parentDataSource" id="gpcpclearDataSource"> 
+    	<property name="url" value="${oracle.jdbc.gpcpclear.url}" />
+ 		<property name="username" value="${oracle.jdbc.gpcpclear.username}" />
+		<property name="password" value="${oracle.jdbc.gpcpclear.password}" />
+	</bean>
+	<bean parent="parentDataSource" id="reportTrDataSource"> 
+    	<property name="url" value="${oracle.jdbc.reportTr.url}" />
+ 		<property name="username" value="${oracle.jdbc.reportTr.username}" />
+		<property name="password" value="${oracle.jdbc.reportTr.password}" />
+	</bean>
+
+	<bean parent="parentDataSource" id="defaultDataSource"> 
+	    <property name="url" value="${oracle.jdbc.url}" />
+	</bean>
+	
+	<!-- 动态数据源 -->
+	<bean class="com.lgame.app.business.datasource.DynamicDataSource" id="dataSource">
+		<property name="readDataSourceList">
+			<list><!-- 用于读的数据库-->
+				<ref bean="readDataSource1"/>
+				<ref bean="readDataSource2"/>
+			</list>	
+		</property>
+		<property name="writeDataSourceList">
+			<list><!-- 用于写的数据库 -->
+				<ref bean="writeDataSource"/>
+			</list>
+		</property>
+		<property name="reportDataSourceList">
+			<list><!-- REPORT数据库 -->
+				<ref bean="reportDataSource"/>
+			</list>
+		</property>
+		<property name="authflowDataSourceList">
+			<list><!-- 用于小表的数据库 -->
+				<ref bean="authflowDataSource"/>
+			</list>
+		</property>
+		<property name="gpcpclearDataSourceList">
+			<list><!-- 用于小表的数据库 -->
+				<ref bean="gpcpclearDataSource"/>
+			</list>
+		</property>
+		<property name="reportTrDataSourceList">
+			<list><!-- 用于出入款總帳的数据库 -->
+				<ref bean="reportTrDataSource"/>
+			</list>
+		</property>
+		<!-- 默认数据库 -->
+		<property name="defaultTargetDataSource" ref="defaultDataSource" ></property>
+	</bean>
+	
+
+	<!--******************************************************************OracleSql 配置 ******************************************************************-->
+	<!-- JNDI方式配置数据源 -->
+	<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> <property name="jndiName" value="${jndiName}"></property> </bean> -->
+	<!-- ========================================配置数据源========================================= -->
+	<!-- 配置数据源，使用的是alibaba的Druid(德鲁伊)数据源 -->
+	<bean name="parentDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<!-- 数据库基本信息配置 -->
+		<property name="driverClassName" value="${oracle.jdbc.driverClassName}" />
+		<property name="url" value="${oracle.jdbc.url}" />
+		<property name="username" value="${oracle.jdbc.username}" />
+		<property name="password" value="${oracle.jdbc.password}" />
+		<!-- 初始化连接数量 -->
+		<property name="initialSize" value="${jdbc.initialSize}" />
+		<!-- 最大并发连接数 -->
+		<property name="maxActive" value="${jdbc.maxActive}" />
+
+		<!-- 最小空闲连接数 -->
+		<property name="minIdle" value="${jdbc.minIdle}" />
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="${jdbc.maxWait}" />
+		<!-- 超过时间限制是否回收 -->
+		<property name="removeAbandoned" value="${jdbc.removeAbandoned}" />
+		<!-- 超过时间限制多长； -->
+		<property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" />
+		<!-- 用来检测连接是否有效的sql，要求是一个查询语句 -->
+		<property name="validationQuery" value="${oracle.jdbc.validationQuery}" />
+		<!-- 申请连接的时候检测 -->
+		<property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+		<!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+		<property name="testOnBorrow" value="${jdbc.testOnBorrow}" />
+		<!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+		<property name="testOnReturn" value="${jdbc.testOnReturn}" />
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="${jdbc.poolPreparedStatements}" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="${jdbc.maxPoolPreparedStatementPerConnectionSize}" />
+		<!--属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有： 监控统计用的filter:stat 日志用的filter:log4j 防御SQL注入的filter:wall -->
+		<property name="filters" value="${jdbc.filters}" />
+		<property name="validationQueryTimeout" value="${jdbc.validationQueryTimeout}" />
+	</bean>
+
+	<!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.lgame.app.business.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryOracle" />
+	</bean>
+	<!-- MyBatis配置 -->
+	<bean id="sqlSessionFactoryOracle" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 显式指定Mapper文件位置 -->
+		<property name="mapperLocations" value="classpath*:mybatis/*Dao.xml" />
+		<property name="typeHandlersPackage" value="com.lgame.app.business.typehandler" />
+		<property name="plugins">
+			<bean name="oraclePaginationInterceptor" class="com.lgame.app.business.dao.interceptor.PaginationInterceptor">
+				<property name="dialect" ref="oracleDialect"/>
+			</bean>				
+		</property>
+		<property name="configLocation" value="classpath:app-mybatis.xml"/>
+	</bean>
+	
+	
+	<!--****************************************************************** PostgreSql 配置 ******************************************************************-->
+	<!-- JNDI方式配置数据源 -->
+	<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> <property name="jndiName" value="${jndiName}"></property> </bean> -->
+	<!-- ========================================配置数据源========================================= -->
+	<!-- 配置数据源，使用的是alibaba的Druid(德鲁伊)数据源 -->
+	<bean name="logDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<!-- 数据库基本信息配置 -->
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<!-- 初始化连接数量 -->
+		<property name="initialSize" value="${jdbc.initialSize}" />
+		<!-- 最大并发连接数 -->
+		<property name="maxActive" value="${jdbc.maxActive}" />
+
+		<!-- 最小空闲连接数 -->
+		<property name="minIdle" value="${jdbc.minIdle}" />
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="${jdbc.maxWait}" />
+		<!-- 超过时间限制是否回收 -->
+		<property name="removeAbandoned" value="${jdbc.removeAbandoned}" />
+		<!-- 超过时间限制多长； -->
+		<property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" />
+		<!-- 用来检测连接是否有效的sql，要求是一个查询语句 -->
+		<property name="validationQuery" value="${jdbc.validationQuery}" />
+		<!-- 申请连接的时候检测 -->
+		<property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+		<!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+		<property name="testOnBorrow" value="${jdbc.testOnBorrow}" />
+		<!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+		<property name="testOnReturn" value="${jdbc.testOnReturn}" />
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="${jdbc.poolPreparedStatements}" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="${jdbc.maxPoolPreparedStatementPerConnectionSize}" />
+		<!--属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有： 监控统计用的filter:stat 日志用的filter:log4j 防御SQL注入的filter:wall -->
+		<property name="filters" value="${jdbc.filters}" />
+	</bean>
+
+	<!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.lgame.app.business.daopostgrel" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryPostgre" />
+	</bean>
+	<!-- MyBatis配置 -->
+	<bean id="sqlSessionFactoryPostgre" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="logDataSource"/>
+		<!-- 显式指定Mapper文件位置 -->
+		<property name="mapperLocations" value="classpath*:mybatispostgresql/*Dao.xml" />
+		<property name="plugins">
+			<bean name="postgresqlPaginationInterceptor" class="com.lgame.app.business.dao.interceptor.PaginationInterceptor">
+				<property name="dialect" ref="postgresqlDialect"/>
+			</bean>
+		</property>
+		<property name="configurationProperties">
+			<props>
+				<prop key="cacheEnabled">true</prop>
+				<!-- 查询时，关闭关联对象即时加载以提高性能 -->
+				<!-- 设置关联对象加载的形态，此处为按需加载字段(加载字段由SQL指定)，不会加载关联表的所有字段，以提高性能 -->
+				<prop key="aggressiveLazyLoading">true</prop>
+				<!-- 对于未知的SQL查询，允许返回不同的结果集以达到通用的效果 -->
+				<prop key="multipleResultSetsEnabled">true</prop>
+				<!-- 允许使用列标签代替列名 -->
+				<prop key="useColumnLabel">true</prop>
+				<!-- 允许使用自定义的主键值(比如由程序生成的UUID 32位编码作为键值)，数据表的PK生成策略将被覆盖 -->
+				<prop key="useGeneratedKeys">true</prop>
+				<!-- 给予被嵌套的resultMap以字段-属性的映射支持 -->
+				<prop key="autoMappingBehavior">FULL</prop>
+				<!-- 数据库超过300秒仍未响应则超时 -->
+				<prop key="defaultStatementTimeout">300</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+	<!--******************************************************************OracleSql REPORT_JOB 配置 ******************************************************************-->
+	<!-- JNDI方式配置数据源 -->
+	<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> <property name="jndiName" value="${jndiName}"></property> </bean> -->
+	<!-- ========================================配置数据源========================================= -->
+	<!-- 配置数据源，使用的是alibaba的Druid(德鲁伊)数据源 -->
+	<bean name="dataSourceReportJob" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<!-- 数据库基本信息配置 -->
+		<property name="driverClassName" value="${oracle.jdbc.driverClassName}" />
+		<property name="url" value="${oracle.jdbc.url}" />
+		<property name="username" value="${oracle.jdbc.usernameReportJob}" />
+		<property name="password" value="${oracle.jdbc.passwordReportJob}" />
+		<!-- 初始化连接数量 -->
+		<property name="initialSize" value="${jdbc.initialSize}" />
+		<!-- 最大并发连接数 -->
+		<property name="maxActive" value="${jdbc.maxActive}" />
+
+		<!-- 最小空闲连接数 -->
+		<property name="minIdle" value="${jdbc.minIdle}" />
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="${jdbc.maxWait}" />
+		<!-- 超过时间限制是否回收 -->
+		<property name="removeAbandoned" value="${jdbc.removeAbandoned}" />
+		<!-- 超过时间限制多长； -->
+		<property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" />
+		<!-- 用来检测连接是否有效的sql，要求是一个查询语句 -->
+		<property name="validationQuery" value="${oracle.jdbc.validationQuery}" />
+		<!-- 申请连接的时候检测 -->
+		<property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+		<!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+		<property name="testOnBorrow" value="${jdbc.testOnBorrow}" />
+		<!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+		<property name="testOnReturn" value="${jdbc.testOnReturn}" />
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="${jdbc.poolPreparedStatements}" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="${jdbc.maxPoolPreparedStatementPerConnectionSize}" />
+		<!--属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有： 监控统计用的filter:stat 日志用的filter:log4j 防御SQL注入的filter:wall -->
+		<property name="filters" value="${jdbc.filters}" />
+	</bean>
+
+</beans>

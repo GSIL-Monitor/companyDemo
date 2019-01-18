@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lgame.app.chart.dao.IGameAppellationDao">
+	<!-- 测试先注释掉 --> 
+	<!-- <cache eviction="LRU" type="com.lgame.app.business.cache.MyBatisRedisCache" /> -->
+	<resultMap id="BaseResultMap" type="com.lgame.app.chart.domain.GameAppellation">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="game_name" property="gameName" jdbcType="VARCHAR" />
+		<result column="game_type" property="gameType" jdbcType="CHAR" />
+		<result column="play_id" property="playId" jdbcType="VARCHAR" />
+		<result column="periods" property="periods" jdbcType="INTEGER" />
+		<result column="period_day" property="periodDay" jdbcType="VARCHAR" />
+		<result column="sale_start_time" property="saleStartTime" jdbcType="VARCHAR" />
+		<result column="sale_end_time" property="saleEndTime" jdbcType="VARCHAR" />
+		<result column="sale_status" property="saleStatus" jdbcType="BIT" />
+		<result column="sort_id" property="sortId" jdbcType="INTEGER" />
+		<result column="play_name" property="playName" jdbcType="VARCHAR" />
+		<result column="max_issue" property="maxIssue" jdbcType="INTEGER" />
+		<result column="game_nick_name" property="gameNickName" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, game_name, game_type, play_id, periods, period_day, sale_start_time, sale_end_time,
+		sale_status, sort_id ,max_issue , game_nick_name
+	</sql>
+	<sql id="Join_Column_List">
+		a.id, a.game_name, a.game_type, a.play_id, a.periods, a.period_day, a.sale_start_time, a.sale_end_time,
+		a.sale_status, a.sort_id,b.play_name, a.max_issue
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from game_appellation
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from game_appellation
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.lgame.app.chart.domain.GameAppellation">
+		insert into game_appellation (id, game_name, game_type,
+		play_id, periods, period_day,
+		sale_start_time, sale_end_time, sale_status,
+		sort_id,max_issue)
+		values (#{id,jdbcType=VARCHAR}, #{gameName,jdbcType=VARCHAR}, #{gameType,jdbcType=CHAR},
+		#{playId,jdbcType=VARCHAR}, #{periods,jdbcType=INTEGER}, #{periodDay,jdbcType=VARCHAR},
+		#{saleStartTime,jdbcType=VARCHAR}, #{saleEndTime,jdbcType=VARCHAR}, #{saleStatus,jdbcType=BIT},
+		#{sortId,jdbcType=INTEGER}, #{maxIssue, jdbcType=INTEGER})
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="com.lgame.app.chart.domain.GameAppellation">
+		update game_appellation
+		set game_name = #{gameName,jdbcType=VARCHAR},
+		game_type = #{gameType,jdbcType=CHAR},
+		play_id = #{playId,jdbcType=VARCHAR},
+		periods = #{periods,jdbcType=INTEGER},
+		period_day = #{periodDay,jdbcType=VARCHAR},
+		sale_start_time = #{saleStartTime,jdbcType=VARCHAR},
+		sale_end_time = #{saleEndTime,jdbcType=VARCHAR},
+		sale_status = #{saleStatus,jdbcType=BIT},
+		max_issue = #{maxIssue, jdbcType=INTEGER}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="findGameAll" resultMap="BaseResultMap">
+		select
+		<include refid="Join_Column_List" />
+		from game_appellation a left join game_play b on(a.play_id=b.id)
+
+		where 1=1
+		<if test="gameType!=null"> and a.game_type=#{gameType}</if>
+		order by a.sort_id,a.id
+	</select>
+	<select id="findGameEnable" resultMap="BaseResultMap">
+		select
+		<include refid="Join_Column_List" />
+		from game_appellation a left join game_play b on(a.play_id=b.id)
+		where a.sale_status = 1
+		
+		<if test="gameTypes!=null">
+			and a.game_type in
+			<foreach collection="gameTypes" open="(" close=")" separator="," item="gameType">#{gameType}</foreach>
+		</if>
+		order by a.sort_id,a.id
+	</select>
+
+	<select id="findSiteGameEnable" resultMap="BaseResultMap">
+		select
+		<include refid="Join_Column_List" />
+		from pub_site_game s
+		left join game_appellation a on (s.game_id = a.id)
+		left join game_play b on(a.play_id=b.id)
+		where a.sale_status = 1
+		and s.site_id = #{siteId}
+		and s.game_open = 1
+		<!-- 这个暂时这么写后面去掉，因为先上这些彩种  -->
+		AND A.ID in ('CQSSC', 'GD11X5', 'BJPK10','XJSSC','SH11X5','TJSSC','SD11X5','PL3CP','JX11X5','SHSSL','JLFFC','TSFFC','TFFFC','KORFFC','OGMMC','OGMMCVIP','TWFFC','AUFFC','JS11X5','XJ11X5','SLFKFFC','XGLHC','TWBINGO','SLFKKL8','HLJSSC','JLPK10','TSPK10','TFPK10','AUKL8')
+		<if test="gameTypes!=null">
+			and a.game_type in
+			<foreach collection="gameTypes" open="(" close=")" separator="," item="gameType">#{gameType}</foreach>
+		</if>
+		order by s.sort_id,a.id
+	</select>
+	<!-- 向下排序的时候 获取下一个排序值 -->
+	<select id="selectIdByDownSortId" resultMap="BaseResultMap">
+		select * from (
+		select
+		<include refid="Base_Column_List" />
+		from game_appellation where sort_id &gt;#{sortId} and game_type=#{gameType} order by sort_id asc ) where rownum=1
+	</select>
+	<!-- 向上排序的时候获取上一个排序值 -->
+	<select id="selectIdByUpSortId" resultMap="BaseResultMap">
+		select * from (
+		select
+		<include refid="Base_Column_List" />
+		from game_appellation where sort_id &lt;#{sortId} and game_type=#{gameType} order by sort_id desc ) where rownum=1
+	</select>
+	<!-- 修改排序值 -->
+	<update id="updateGameAppellationSortId">
+		update game_appellation set sort_id=#{sortId} where id=#{id}
+	</update>
+	<!-- 插入时,所有大于当前排序值的+1 -->
+	<update id="updateGameAppellationSortDown">
+		update game_appellation set sort_id=sort_id+1 where sort_id>=#{sortId} and game_type=#{gameType}
+	</update>
+	<select id="selectByIdAndSiteId" resultMap="BaseResultMap">
+		select
+		a.id, a.game_name, a.game_type, a.play_id, a.periods, a.period_day, a.sale_start_time, a.sale_end_time,
+		a.sale_status, a.sort_id
+		from game_appellation a join pub_site_game b on(a.id=b.game_id)
+		where a.id = #{id,jdbcType=VARCHAR} and b.site_id=#{siteId}
+	</select>
+	<select id="findGameByGameClass" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from game_appellation where game_class=#{gameClass} order by game_type,sort_id
+	</select>
+	
+	<select id="findEnabledGameByGameClass" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from game_appellation where game_class=#{gameClass} and sale_status=1 order by game_type,sort_id
+	</select>
+</mapper>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lgame.app.chart.dao.IGameChartRecordDao" >
+
+   <resultMap id="BaseResultMap" type="com.lgame.app.chart.domain.GameChartRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="game_id" property="gameId" jdbcType="VARCHAR" />
+    <result column="game_name" property="gameName" jdbcType="VARCHAR" />
+    <result column="play_id" property="playId" jdbcType="VARCHAR" />
+    <result column="issue" property="issue" jdbcType="VARCHAR" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="chart_record" property="chartRecord" jdbcType="VARCHAR" />
+ 	<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+ 	<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, game_id , game_name, play_id, issue , result, chart_record ,  create_date, update_date
+  </sql>
+  
+  
+  <insert id="insert" parameterType="com.lgame.app.chart.domain.GameChartRecord" useGeneratedKeys="false" keyProperty="id" flushCache="true">
+    <selectKey resultType="int" order="BEFORE" keyProperty="id">
+            select GAME_CHART_Record_id_seq.NEXTVAL FROM DUAL
+    </selectKey>
+    insert into GAME_CHART_Record (id,game_id, game_name , play_id, issue, result, chart_record, create_date)
+    values (#{id}, #{gameId,jdbcType=VARCHAR}, #{gameName,jdbcType=VARCHAR}, #{playId,jdbcType=VARCHAR},
+      #{issue,jdbcType=VARCHAR},  #{result,jdbcType=VARCHAR} ,  #{chartRecord,jdbcType=VARCHAR}  ,#{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  
+  
+    <insert id="insertList" parameterType="com.lgame.app.chart.domain.GameChartRecord" useGeneratedKeys="false" keyProperty="id" flushCache="true">
+	 INSERT into GAME_CHART_Record
+      (id,game_id, game_name , play_id, issue, result, chart_record, create_date) 
+		select GAME_CHART_Record_id_seq.nextval, A.* from(
+	 <foreach collection="recordList" item="record" index="index" separator="UNION">
+	 	 	select 
+      	#{record.gameId,jdbcType=VARCHAR}, #{record.gameName,jdbcType=VARCHAR}, #{record.playId,jdbcType=VARCHAR},
+        #{record.issue,jdbcType=VARCHAR},  #{record.result,jdbcType=VARCHAR} ,  #{record.chartRecord,jdbcType=VARCHAR},
+        #{record.createDate,jdbcType=TIMESTAMP}
+     	from dual
+  	</foreach> 
+		)A	 
+  </insert>
+  
+  
+    <select id="queryChartRecordByMap" resultMap="BaseResultMap" parameterType="java.util.HashMap"  >
+   
+  
+	    select 
+	    <include refid="Base_Column_List" />
+	    from game_chart_record
+	    where 1=1
+	    
+	      <if test="gameId != null" >
+	          and game_id = #{gameId}
+	      </if>
+	      <if test="playId != null" >
+	          and play_id = #{playId}
+	      </if>
+	  
+	      <if test="issue != null" >
+	          and issue = #{issue}
+	      </if>
+	      
+	       <if test="orderBy != null" >
+	          order by ${orderBy} 
+	      </if>
+  
+    
+    
+    
+  </select>
+  
+  
+   <select id="queryChartRecordReportByMap" resultMap="BaseResultMap" parameterType="java.util.HashMap"  >
+   
+   	select B.* from (
+    	select A.* from (
+	    select 
+	    <include refid="Base_Column_List" />
+	    from game_chart_record
+	    where 1=1
+	    
+	      <if test="gameId != null" >
+	          and game_id = #{gameId}
+	      </if>
+	      <if test="playId != null" >
+	          and play_id = #{playId}
+	      </if>
+	  
+	      <if test="issue != null" >
+	          and issue = #{issue}
+	      </if>
+	      
+	      
+	          order by id DESC
+	     
+    	) A
+    	<if test="rowNum != null" >
+	           where rownum <![CDATA[ <=  ]]> ${rowNum}
+	     </if>
+    ) B
+     ORDER BY b.id
+    
+  </select>
+  
+   <select id="queryLastRecord" resultMap="BaseResultMap" parameterType="java.util.HashMap"  >
+	  SELECT  
+	  <include refid="Base_Column_List" />
+	    FROM GAME_CHART_RECORD A JOIN 
+		(
+			SELECT MAX(CREATE_DATE) MAX_CDATE,game_id BGAMEID FROM GAME_CHART_RECORD B
+			WHERE game_id = #{gameId}
+			GROUP BY game_id
+		) B ON A.GAME_ID = B.BGAMEID AND A.CREATE_DATE = B.MAX_CDATE
+   </select>
+</mapper>

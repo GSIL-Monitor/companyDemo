@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+
+xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	
+	<!--排列3 -->
+	<bean id="chartPL3CPTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartPL3CPTaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartPL3CPTaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartPL3CPTask" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartPL3CPTask" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="PL3CP" />
+	</bean>
+	
+	<!--香港六合彩 -->
+	<bean id="chartXGLHCTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartXGLHCTaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartXGLHCTaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartXGLHCTask" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartXGLHCTask" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="XGLHC" />
+	</bean>
+	
+	<!--北京快乐8 -->
+	<bean id="chartBJKL8TaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartBJKL8TaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartBJKL8TaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartBJKL8Task" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartBJKL8Task" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="BJKL8" />
+	</bean>
+	
+	<!--台湾宾果 -->
+	<bean id="chartTWBINGOTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartTWBINGOTaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartTWBINGOTaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartTWBINGOTask" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartTWBINGOTask" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="TWBINGO" />
+	</bean>
+	
+	<!--斯洛伐克快乐8 -->
+	<bean id="chartSLFKKL8TaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartSLFKKL8TaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartSLFKKL8TaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartSLFKKL8Task" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartSLFKKL8Task" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="SLFKKL8" />
+	</bean>
+	
+	<!--澳洲快乐8 -->
+	<bean id="chartAUKL8TaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartAUKL8TaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartAUKL8TaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartAUKL8Task" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartAUKL8Task" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="AUKL8" />
+	</bean>
+	
+	<!--东方赛车1分彩 -->
+	<bean id="chartJLPK10TaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartJLPK10TaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartJLPK10TaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartJLPK10Task" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartJLPK10Task" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="JLPK10" />
+	</bean>
+	
+	<!--东方赛车3分彩 -->
+	<bean id="chartTSPK10TaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartTSPK10TaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartTSPK10TaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartTSPK10Task" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartTSPK10Task" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="TSPK10" />
+	</bean>
+	
+	<!--东方赛车5分彩 -->
+	<bean id="chartTFPK10TaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartTFPK10TaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartTFPK10TaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartTFPK10Task" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartTFPK10Task" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="TFPK10" />
+	</bean>
+	
+	<!--北京赛车 -->
+	<bean id="chartBJPK10TaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartBJPK10TaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartBJPK10TaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartBJPK10Task" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartBJPK10Task" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="BJPK10" />
+	</bean>
+</beans>

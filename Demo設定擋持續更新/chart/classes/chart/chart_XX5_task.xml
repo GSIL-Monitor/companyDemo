@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+
+xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	
+
+	<!--上海11选5 -->
+	<bean id="chartSH11X5TaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartSH11X5TaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartSH11X5TaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartSH11X5Task" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartSH11X5Task" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="SH11X5" />
+	</bean>
+	
+	<!--山东11选5 -->
+	<bean id="chartSD11X5TaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartSD11X5TaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartSD11X5TaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartSD11X5Task" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartSD11X5Task" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="SD11X5" />
+	</bean>
+	
+	<!--广东11选5 -->
+	<bean id="chartGD11X5TaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartGD11X5TaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartGD11X5TaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartGD11X5Task" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartGD11X5Task" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="GD11X5" />
+	</bean>
+	
+	<!--新疆11选5 -->
+	<bean id="chartXJ11X5TaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartXJ11X5TaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartXJ11X5TaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartXJ11X5Task" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartXJ11X5Task" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="XJ11X5" />
+	</bean>
+	
+	<!--江苏11选5 -->
+	<bean id="chartJS11X5TaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartJS11X5TaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartJS11X5TaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartJS11X5Task" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartJS11X5Task" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="JS11X5" />
+	</bean>
+	
+	<!--江西11选5 -->
+	<bean id="chartJX11X5TaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartJX11X5TaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartJX11X5TaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartJX11X5Task" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartJX11X5Task" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="JX11X5" />
+	</bean>
+	
+	<!--黑龙江11选5 -->
+	<bean id="chartHLJ11X5TaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartHLJ11X5TaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartHLJ11X5TaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartHLJ11X5Task" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartHLJ11X5Task" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="HLJ11X5" />
+	</bean>
+	
+	<!--中福11选5 -->
+	<bean id="chartCF111X5TaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartCF111X5TaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartCF111X5TaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartCF111X5Task" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartCF111X5Task" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="CF111X5" />
+	</bean>
+	
+	<!--東方11选5 -->
+	<bean id="chartOG111X5TaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="chartOG111X5TaskDetail" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
+	<bean id="chartOG111X5TaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="chartOG111X5Task" />
+		<property name="targetMethod" value="excute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="chartOG111X5Task" class="com.lgame.app.task.schedule.chart.ChartTask">
+		<property name="gameId" value="OG111X5" />
+	</bean>
+</beans>
