@@ -44,6 +44,14 @@ xmlns:util="http://www.springframework.org/schema/util"
  				<ref bean="chartTFFFCTaskTrigger"/>	
 				<ref bean="chartTWFFCTaskTrigger"/>	
 				<ref bean="chartSLFKFFCTaskTrigger"/>	
+ 				<ref bean="chartPH1FFCTaskTrigger"/>	
+ 				<ref bean="chartPH15FFCTaskTrigger"/>	
+ 				<ref bean="chartPH3FFCTaskTrigger"/>	
+ 				<ref bean="chartPH5FFCTaskTrigger"/>	
+ 				<ref bean="chartTC1FFCTaskTrigger"/>	
+ 				<ref bean="chartTC15FFCTaskTrigger"/>	
+ 				<ref bean="chartTC3FFCTaskTrigger"/>	
+ 				<ref bean="chartTC5FFCTaskTrigger"/>	 				
 <!-- 				<ref bean="chartAUFFCTaskTrigger"/>	 -->
 				<ref bean="chartKORFFCTaskTrigger"/>	
 				<!--时时彩分分彩chartTask		end-->
@@ -125,6 +133,11 @@ xmlns:util="http://www.springframework.org/schema/util"
 				<ref bean="chartPH1K3TaskTrigger"/>
  				<ref bean="chartPH3K3TaskTrigger"/>
  				<ref bean="chartPH5K3TaskTrigger"/>
+
+ 				<ref bean="chartPH1PK10TaskTrigger"/>	
+ 				<ref bean="chartPH15PK10TaskTrigger"/>	
+ 				<ref bean="chartPH3PK10TaskTrigger"/>	
+ 				<ref bean="chartPH5PK10TaskTrigger"/>
 			</list>
 		</property>
 		<!-- Quartz配置, 本地运行无需单独的quartz.properties文件，在此简单配置即可 -->
