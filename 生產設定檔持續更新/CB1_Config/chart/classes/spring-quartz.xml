@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+
+xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	<description>Quartz的本地Cron式执行任务配置</description>
+	
+	<import resource="/chart/chart_K3_task.xml"/>	
+	<import resource="/chart/chart_SSC_task.xml"/>
+	<import resource="/chart/chart_XX5_task.xml"/>
+	<import resource="/chart/chart_task.xml"/>
+	<import resource="/chart/chart_CTCP_task.xml"/> 
+	<import resource="/chart/chart_TG_task.xml"/> 
+	<import resource="/chart/chart_CPCP_task.xml"/>
+	<!-- Quartz本地Schduler -->
+	<bean id="localQuartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- Triggers集成 -->
+		<property name="triggers">
+			<list>
+				<!--快3chartTask		start-->
+ 				<ref bean="chartGSK3TaskTrigger"/>
+ 				<ref bean="chartGXK3TaskTrigger"/>
+ 				<ref bean="chartHEBK3TaskTrigger"/>
+ 				<ref bean="chartHUBK3TaskTrigger"/>
+ 				<ref bean="chartJSK3TaskTrigger"/>
+ 				<ref bean="chartSHK3TaskTrigger"/>
+ 				<ref bean="chartGZK3TaskTrigger"/>
+ 				<ref bean="chartJLK3TaskTrigger"/>
+ 				<ref bean="chartOG1K3TaskTrigger"/>
+ 				<ref bean="chartAHK3TaskTrigger"/>
+ 				<ref bean="chartBJK3TaskTrigger"/>	 
+ 				<ref bean="chartCF1K3TaskTrigger"/>	 
+				<ref bean="chartXY1K3TaskTrigger"/>
+				<ref bean="chartPH1K3TaskTrigger"/>
+ 				<ref bean="chartPH3K3TaskTrigger"/>
+ 				<ref bean="chartPH5K3TaskTrigger"/>
+ 				
+ 				<ref bean="chartOG3K3TaskTrigger"/>
+ 				<ref bean="chartOG5K3TaskTrigger"/>
+ 				<ref bean="chartCF3K3TaskTrigger"/>
+ 				<ref bean="chartCF5K3TaskTrigger"/>
+ 				<ref bean="chartXY3K3TaskTrigger"/>
+ 				<ref bean="chartXY5K3TaskTrigger"/>				
+				<!--快3chartTask		end-->
+				<!--时时彩分分彩chartTask		start-->
+<!-- 				<ref bean="chartSHSSLTaskTrigger"/>	 -->
+				<ref bean="chartTJSSCTaskTrigger"/>	
+				<ref bean="chartXJSSCTaskTrigger"/>	
+				<ref bean="chartHLJSSCTaskTrigger"/>	
+<!-- 				<ref bean="chartJXSSCTaskTrigger"/>	 -->
+				<ref bean="chartCQSSCTaskTrigger"/>	 
+ 				<ref bean="chartJLFFCTaskTrigger"/>	
+ 				<ref bean="chartTSFFCTaskTrigger"/>	
+ 				<ref bean="chartTFFFCTaskTrigger"/>	
+				<ref bean="chartTWFFCTaskTrigger"/>	
+				<ref bean="chartSLFKFFCTaskTrigger"/>	
+<!-- 				<ref bean="chartAUFFCTaskTrigger"/>	 -->
+				<ref bean="chartKORFFCTaskTrigger"/>
+				<ref bean="chartCF1FFCTaskTrigger"/>
+				<ref bean="chartXY1FFCTaskTrigger"/>
+ 				<ref bean="chartPH1FFCTaskTrigger"/>	
+ 				<ref bean="chartPH15FFCTaskTrigger"/>	
+ 				<ref bean="chartPH3FFCTaskTrigger"/>	
+ 				<ref bean="chartPH5FFCTaskTrigger"/>	
+ 				<ref bean="chartTC1FFCTaskTrigger"/>	
+ 				<ref bean="chartTC15FFCTaskTrigger"/>	
+ 				<ref bean="chartTC3FFCTaskTrigger"/>	
+ 				<ref bean="chartTC5FFCTaskTrigger"/>				
+				<!--时时彩分分彩chartTask		end-->
+				<!--XX5chartTask		start-->
+				<ref bean="chartSH11X5TaskTrigger"/>
+				<ref bean="chartSD11X5TaskTrigger"/>
+				<ref bean="chartGD11X5TaskTrigger"/>
+				<ref bean="chartXJ11X5TaskTrigger"/>
+				<ref bean="chartJS11X5TaskTrigger"/>
+				<ref bean="chartJX11X5TaskTrigger"/>
+				<ref bean="chartHLJ11X5TaskTrigger"/>
+				<ref bean="chartCF111X5TaskTrigger"/>
+				<ref bean="chartOG111X5TaskTrigger"/>
+				<!--XX5chartTask		end-->
+				<!--chartTask		start-->
+				<ref bean="chartPL3CPTaskTrigger"/>
+<!-- 				<ref bean="chartXGLHCTaskTrigger"/> -->
+				<!--快乐8chartTask-->
+				<ref bean="chartBJKL8TaskTrigger"/>
+				<ref bean="chartTWBINGOTaskTrigger"/>
+				<ref bean="chartSLFKKL8TaskTrigger"/>
+<!-- 				<ref bean="chartAUKL8TaskTrigger"/> -->
+				<!--PK10chartTask-->
+ 				<ref bean="chartJLPK10TaskTrigger"/> 
+ 				<ref bean="chartTSPK10TaskTrigger"/> 
+ 				<ref bean="chartTFPK10TaskTrigger"/> 
+ 				<ref bean="chartBJPK10TaskTrigger"/>
+				<ref bean="chartCF1PK10TaskTrigger"/>
+ 				<ref bean="chartXY1PK10TaskTrigger"/>
+ 				<ref bean="chartPH1PK10TaskTrigger"/>	
+ 				<ref bean="chartPH15PK10TaskTrigger"/>	
+ 				<ref bean="chartPH3PK10TaskTrigger"/>	
+ 				<ref bean="chartPH5PK10TaskTrigger"/>
+ 				<!-- 传统重庆时时彩 -->
+				<ref bean="chartCTCQSSCTaskTrigger"/>
+ 				<!-- 传统PK10 -->
+ 				<ref bean="chartCTBJPK10TaskTrigger"/> 
+				<ref bean="chartCTOG1SSCTaskTrigger"/> 
+				<ref bean="chartCTOG1BSCTaskTrigger"/>
+				<!-- 传统幸运飞艇 -->
+				<ref bean="chartCTXYFTTaskTrigger"/>
+				<!-- 幸运飞艇 -->
+				<ref bean="chartXYFTTaskTrigger"/>
+				<!-- 传统快3 -->
+ 				<ref bean="chartCTOG1K3TaskTrigger"/> 
+ 				<ref bean="chartCTBJK3TaskTrigger"/> 
+ 				<ref bean="chartCTJLK3TaskTrigger"/> 
+ 				<ref bean="chartCTJSK3TaskTrigger"/>
+ 				<ref bean="chartCTAHK3TaskTrigger"/> 
+ 				<ref bean="chartCTGSK3TaskTrigger"/> 			
+ 				<ref bean="chartCTGXK3TaskTrigger"/> 			
+ 				<ref bean="chartCTGZK3TaskTrigger"/> 			
+ 				<ref bean="chartCTHEBK3TaskTrigger"/> 			
+ 				<ref bean="chartCTHUBK3TaskTrigger"/> 			
+ 				<ref bean="chartCTSHK3TaskTrigger"/>
+ 				<ref bean="chartCTOG3K3TaskTrigger"/> 			
+ 				<ref bean="chartCTOG5K3TaskTrigger"/> 			
+ 				<ref bean="chartCTCF3K3TaskTrigger"/> 			
+ 				<ref bean="chartCTXY3K3TaskTrigger"/> 			
+ 				<ref bean="chartCTCF5K3TaskTrigger"/> 			
+ 				<ref bean="chartCTXY5K3TaskTrigger"/>
+ 				<ref bean="chartCTXY1K3TaskTrigger"/> 
+ 			 	<ref bean="chartCTCF1K3TaskTrigger"/> 
+
+ 			 	<ref bean="chartCTOG3BSCTaskTrigger"/>
+				<ref bean="chartCTOG5BSCTaskTrigger"/>
+				<ref bean="chartCTXY1BSCTaskTrigger"/>
+				<ref bean="chartCTXY3BSCTaskTrigger"/>
+				<ref bean="chartCTXY5BSCTaskTrigger"/>
+				<ref bean="chartCTCF1BSCTaskTrigger"/>
+				<ref bean="chartCTCF3BSCTaskTrigger"/>
+				<ref bean="chartCTCF5BSCTaskTrigger"/>
+				<ref bean="chartCTXY1SSCTaskTrigger"/> 
+				<ref bean="chartCTCF1SSCTaskTrigger"/>
+
+				<ref bean="chartOG15FFCTaskTrigger"/>	
+				<ref bean="chartOG15PK10TaskTrigger"/>
+				<ref bean="chartCTOG15FFCTaskTrigger"/>
+				<ref bean="chartCTOG15PK10TaskTrigger"/>
+				<!--chartTask		end-->
+				<!-- 长龙提醒 -->
+				<ref bean="chartCF3K3TGTaskTrigger"/>
+				<ref bean="chartOG3K3TGTaskTrigger"/>
+				<ref bean="chartXY3K3TGTaskTrigger"/>
+				<ref bean="chartCF5K3TGTaskTrigger"/>
+				<ref bean="chartOG5K3TGTaskTrigger"/>
+				<ref bean="chartXY5K3TGTaskTrigger"/>
+				<ref bean="chartCTCF3K3TGTaskTrigger"/>
+				<ref bean="chartCTOG3K3TGTaskTrigger"/>
+				<ref bean="chartCTXY3K3TGTaskTrigger"/>
+				<ref bean="chartCTCF5K3TGTaskTrigger"/>
+				<ref bean="chartCTOG5K3TGTaskTrigger"/>
+				<ref bean="chartCTXY5K3TGTaskTrigger"/>	
+				<!-- 牛牛 -->
+				<ref bean="chartOGNNTaskTrigger"/>	
+			</list>
+		</property>
+		<!-- Quartz配置, 本地运行无需单独的quartz.properties文件，在此简单配置即可 -->
+		<property name="quartzProperties">
+			<props>
+				<prop key="org.quartz.threadPool.threadCount">20</prop>
+			</props>
+		</property>
+		<!-- 启动时延期2秒开始任务 -->
+		<property name="startupDelay" value="2" />
+	</bean>
+
+	
+	
+	
+</beans>

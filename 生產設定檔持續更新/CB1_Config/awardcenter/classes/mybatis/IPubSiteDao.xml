@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lgame.app.awardcenter.dao.IPubSiteDao" >
+  <resultMap id="BaseResultMap" type="com.lgame.app.awardcenter.domain.PubSite" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sit_name" property="sitName" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="master_domain" property="masterDomain" jdbcType="VARCHAR" />
+    <result column="method_path" property="methodPath" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sit_name, company_id, master_domain,method_path, create_time, status
+  </sql>
+ 
+  <select id="queryPubSite" resultMap="BaseResultMap">
+    select 
+   <include refid="Base_Column_List" />
+    from pub_site
+    where status = 1
+  </select> 
+  
+</mapper>
